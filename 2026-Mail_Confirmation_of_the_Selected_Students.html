@@ -14,36 +14,35 @@
         }
         .table-container {
             width: 100%;
-            overflow-x: auto; /* Adds a smooth horizontal scrollbar if table is wider than screen */
+            overflow-x: auto; /* Adds smooth horizontal scrollbar if columns overflow */
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             border-radius: 8px;
             background: white;
         }
-        /* The structural layout for auto-adjusting columns */
+        /* Structural layout for auto-adjusting columns */
         table {
             border-collapse: collapse;
             width: max-content; /* Dynamically shrinks/grows to exactly fit the content width */
-            min-width: 100%;    /* Ensures it spans at least full screen width if data is sparse */
+            min-width: 100%;    /* Spans full screen width if data is sparse */
         }
         th, td {
             border-bottom: 1px solid #e1e4e8;
             padding: 12px 16px;
             text-align: left;
-            /* Crucial: Prevents text wrapping, forcing columns to expand to the exact text width */
-            white-space: nowrap; 
+            white-space: nowrap; /* Forces columns to expand to the exact text width */
         }
         th {
             background-color: #1f2937;
             color: #ffffff;
             font-weight: 600;
             position: sticky;
-            top: 0; /* Keeps header visible if you scroll vertically */
+            top: 0;
         }
         tr:nth-child(even) td {
             background-color: #f8fafc;
         }
         tr:hover td {
-            background-color: #f1f5f9; /* Subtle row highlight on hover */
+            background-color: #f1f5f9;
         }
         .loading {
             padding: 20px;
@@ -65,8 +64,8 @@
     </div>
 
     <script>
-        // Your specific Google Sheet CSV Export URL
-        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQVGHSnygzd6lIkieye30zp-iVX_unEpKnZ_I3m__BhX0NfHicM_WvEJmo25mONaw/pub?gid=1824938792&single=true&output=csv';
+        // STABLE GOOGLE API ENDPOINT (Bypasses the 404 redirect bug)
+        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQVGHSnygzd6lIkieye30zp-iVX_unEpKnZ_I3m__BhX0NfHicM_WvEJmo25mONaw/gviz/tq?tqx=out:csv&gid=1824938792';
 
         async function loadSheetData() {
             try {
@@ -75,7 +74,7 @@
                 
                 const csvText = await response.text();
                 
-                // Parse CSV using PapaParse (handles quotes, commas within cells, etc.)
+                // Parse CSV using PapaParse
                 Papa.parse(csvText, {
                     skipEmptyLines: true,
                     complete: function(results) {
@@ -88,7 +87,7 @@
             } catch (error) {
                 console.error("Error loading sheet:", error);
                 document.getElementById('loading-state').innerHTML = 
-                    `<span style="color: red;">Error loading data. Verify that the Google Sheet is actively published to the web.</span>`;
+                    `<span style="color: red;">Error loading data. Verify that the Google Sheet sharing permissions are set to "Anyone with the link can view".</span>`;
             }
         }
 
@@ -101,7 +100,11 @@
             const headContainer = document.getElementById('table-head');
             const bodyContainer = document.getElementById('table-body');
             
-            // 1. Build Header Row (First row of your sheet)
+            // Clear prior contents
+            headContainer.innerHTML = "";
+            bodyContainer.innerHTML = "";
+
+            // 1. Build Header Row
             const headerRow = document.createElement('tr');
             data[0].forEach(headerText => {
                 const th = document.createElement('th');
@@ -123,7 +126,7 @@
                 bodyContainer.appendChild(tr);
             }
 
-            // Hide loading message and display the completed table
+            // UI adjustments
             document.getElementById('loading-state').style.display = 'none';
             document.getElementById('sheet-table').style.display = 'table';
         }
