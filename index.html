@@ -15,9 +15,10 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             min-height: 100vh;
-            background: linear-gradient(135deg, #090514 0%, #0d1527 40%, #1e0b24 80%, #05020c 100%);
+            /* Ultra High-Fidelity Deep Cosmic Neon Mesh Gradient */
+            background: radial-gradient(circle at 10% 20%, #03000a 0%, #081122 35%, #240533 70%, #000000 100%);
             background-attachment: fixed;
-            color: #f8fafc;
+            color: #ffffff;
             padding: 15px 15px; 
             display: flex;
             flex-direction: column;
@@ -26,37 +27,36 @@
             position: relative;
         }
 
-        /* Ambient Floating Color Blobs */
+        /* 24K HD Premium Hyper-Glow Shifting Blobs */
         .glow-blob {
             position: fixed;
             border-radius: 50%;
-            filter: blur(90px);
-            opacity: 0.35;
+            filter: blur(120px);
+            opacity: 0.45;
             z-index: 0;
             pointer-events: none;
         }
         .blob-pink {
-            width: 450px;
-            height: 450px;
-            background: #ec4899;
-            top: -10%;
-            left: -10%;
-            animation: float-around 22s infinite ease-in-out;
+            width: 500px;
+            height: 500px;
+            background: #ff007f;
+            top: -15%;
+            left: -15%;
+            animation: float-around 18s infinite ease-in-out alternate;
         }
         .blob-blue {
-            width: 550px;
-            height: 550px;
-            background: #3b82f6;
-            bottom: -15%;
-            right: -10%;
-            animation: float-around 28s infinite ease-in-out alternate;
+            width: 600px;
+            height: 600px;
+            background: #00e5ff;
+            bottom: -20%;
+            right: -15%;
+            animation: float-around 24s infinite ease-in-out alternate-reverse;
         }
 
         @keyframes float-around {
             0% { transform: translate(0px, 0px) scale(1); }
-            33% { transform: translate(40px, 60px) scale(1.1); }
-            66% { transform: translate(-30px, 30px) scale(0.95); }
-            100% { transform: translate(0px, 0px) scale(1); }
+            50% { transform: translate(60px, 80px) scale(1.2); }
+            100% { transform: translate(-40px, 40px) scale(0.9); }
         }
 
         /* Branding Header Section Container */
@@ -71,33 +71,34 @@
 
         .main-heading {
             font-size: 2.1rem;
-            font-weight: 700;
+            font-weight: 800; /* Ultra-bold */
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #38bdf8 0%, #ec4899 50%, #f472b6 100%);
+            background: linear-gradient(135deg, #00e5ff 0%, #ff007f 50%, #e040fb 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 4px; 
+            text-shadow: 0 0 40px rgba(0, 229, 255, 0.2);
         }
 
         .sub-heading {
             font-size: 1.25rem;
-            font-weight: 500;
+            font-weight: 700; /* Made Bold */
             letter-spacing: 0.02em;
-            color: #cbd5e1;
+            color: #e2e8f0;
             margin-bottom: 8px; 
-            opacity: 0.95;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
         }
 
         .context-heading {
             display: inline-block;
             font-size: 1rem;
-            font-weight: 400;
+            font-weight: 700; /* Made Bold */
             padding: 6px 18px;
-            background: linear-gradient(90deg, rgba(56, 189, 248, 0.12) 0%, rgba(236, 72, 153, 0.12) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: linear-gradient(90deg, rgba(0, 229, 255, 0.2) 0%, rgba(ff, 0, 127, 0.2) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50px;
-            color: #f472b6;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            color: #ff007f;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 0, 127, 0.2);
         }
 
         /* Controls Filter Panel Row Below Headings */
@@ -120,37 +121,40 @@
 
         .input-control {
             width: 100%;
-            padding: 10px 16px;
-            background: rgba(13, 11, 24, 0.75);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 11px 16px;
+            background: rgba(6, 4, 12, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
             color: #ffffff;
             font-size: 0.95rem;
+            font-weight: 700; /* Made input text bold */
             outline: none;
             transition: all 0.2s ease;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
         }
 
         .input-control:focus {
-            border-color: #38bdf8;
-            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+            border-color: #00e5ff;
+            box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.3), inset 0 1px 3px rgba(0,0,0,0.5);
         }
 
         select.input-control option {
-            background-color: #0d1527;
+            background-color: #06040c;
             color: #ffffff;
+            font-weight: 600;
         }
 
-        /* Glassmorphic Table Container Card */
+        /* 24K HD 3D Solid Glassmorphic Container Card */
         .table-card {
             width: 100%;
             max-width: 1400px;
-            background: rgba(13, 11, 24, 0.65);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            border-radius: 14px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, rgba(16, 12, 28, 0.75) 0%, rgba(8, 10, 20, 0.8) 100%);
+            backdrop-filter: blur(40px); /* Enhanced 3D Glass clarity depth */
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.12); /* Crisp solid perimeter border */
+            border-radius: 16px;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255,255,255,0.1); /* Real 3D depth styling */
             overflow: hidden;
             position: relative;
             z-index: 1;
@@ -161,19 +165,19 @@
             overflow-x: auto;
         }
 
-        /* Custom Scrollbars */
+        /* Custom HD Scrollbars */
         .table-responsive-wrapper::-webkit-scrollbar {
-            height: 8px;
+            height: 9px;
         }
         .table-responsive-wrapper::-webkit-scrollbar-track {
-            background: rgba(13, 11, 24, 0.6);
+            background: rgba(5, 3, 10, 0.8);
         }
         .table-responsive-wrapper::-webkit-scrollbar-thumb {
-            background: linear-gradient(90deg, #38bdf8, #ec4899);
-            border-radius: 4px;
+            background: linear-gradient(90deg, #00e5ff, #ff007f);
+            border-radius: 10px;
         }
 
-        /* Structural Auto-Width Table Rules */
+        /* Strict Structural Auto-Width Table Rules */
         table {
             border-collapse: collapse;
             width: max-content; 
@@ -181,32 +185,41 @@
         }
 
         th, td {
-            padding: 12px 20px;
+            padding: 14px 22px;
             text-align: center; 
             white-space: nowrap; 
-            font-size: 0.95rem;
+            font-size: 0.98rem;
             vertical-align: middle;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
         }
 
+        /* Solid Table Header Styles - Premium Sapphire Contrast */
         th {
-            background-color: #0f2e4a; 
-            color: #38bdf8;
-            font-weight: 600;
-            letter-spacing: 0.01em;
-            border-bottom: 2px solid rgba(56, 189, 248, 0.2);
+            background-color: #051d33; 
+            color: #00e5ff;
+            font-weight: 800; /* Ultra-bold Headers */
+            letter-spacing: 0.02em;
+            border-bottom: 3px solid rgba(0, 229, 255, 0.4);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
         }
 
+        /* Data Rows Layout - High Contrast Bold Rendering */
         tr {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-            transition: background-color 0.2s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            transition: background-color 0.15s ease;
+        }
+
+        td {
+            font-weight: 600; /* CRITICAL: Everything Bolded */
+            color: #ffffff;
         }
 
         tr:nth-child(even) {
-            background-color: rgba(255, 255, 255, 0.01);
+            background-color: rgba(255, 255, 255, 0.02);
         }
 
         tr:hover td {
-            background-color: rgba(236, 72, 153, 0.08);
+            background-color: rgba(255, 0, 127, 0.12);
             color: #ffffff;
         }
 
@@ -216,41 +229,42 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            padding: 6px 14px;
-            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+            padding: 7px 16px;
+            background: linear-gradient(135deg, #ff0055 0%, #b3003b 100%);
             color: #ffffff !important;
             text-decoration: none;
             border-radius: 6px;
             font-size: 0.85rem;
-            font-weight: 500;
-            box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
+            font-weight: 800; /* Bolded button text */
+            box-shadow: 0 3px 10px rgba(255, 0, 85, 0.4);
             transition: all 0.2s ease;
         }
 
         .view-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.5);
-            background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);
+            transform: translateY(-1.5px);
+            box-shadow: 0 6px 18px rgba(255, 0, 85, 0.6);
+            background: linear-gradient(135deg, #ff3377 0%, #d60048 100%);
         }
 
         .pdf-icon {
-            width: 14px;
-            height: 14px;
+            width: 15px;
+            height: 15px;
             fill: currentColor;
         }
 
         /* UI Loading Layout */
         .status-container {
-            padding: 45px;
+            padding: 50px;
             text-align: center;
-            font-size: 1.1rem;
-            color: #94a3b8;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #cbd5e1;
         }
         .pulse {
             animation: pulse-animation 2s infinite ease-in-out;
         }
         @keyframes pulse-animation {
-            0%, 100% { opacity: 0.6; }
+            0%, 100% { opacity: 0.5; }
             50% { opacity: 1; }
         }
     </style>
@@ -263,7 +277,7 @@
     <div class="header-section">
         <h1 class="main-heading">Mahatma Gandhi Institute of Technology (A)</h1>
         <h2 class="sub-heading">Training & Placement Cell</h2>
-        <div class="context-heading">Mail Confirmation of the Selected Students for the Academic Year 2025-2026</div>
+        <div class="context-heading">Mail Confirmation of the Selected Students by the Company</div>
     </div>
 
     <div class="controls-panel">
@@ -291,7 +305,6 @@
         const yourSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQVGHSnygzd6lIkieye30zp-iVX_unEpKnZ_I3m__BhX0NfHicM_WvEJmo25mONaw/pub?gid=1824938792&single=true&output=csv';
         
         // --- COLUMN CONFIGURATION ---
-        // Make sure these match the exact text layout inside your Google Sheet header cells!
         const COMPANY_COLUMN_NAME = "Company Name"; 
         const ROLE_COLUMN_NAME = "Role";
         
@@ -314,7 +327,7 @@
                     console.error("Data Load Error:", err);
                     const statusBox = document.getElementById('status-display');
                     statusBox.classList.remove('pulse');
-                    statusBox.innerHTML = `<span style="color:#f43f5e; font-weight:500;">Unable to pull data. Check permissions.</span>`;
+                    statusBox.innerHTML = `<span style="color:#ff0055; font-weight:700;">Unable to pull data. Check permissions.</span>`;
                 }
             });
         }
@@ -328,7 +341,6 @@
             }
         }
 
-        // Strict Matching targeting your specific Column Text configuration names
         function detectFilterColumns(headerRow) {
             headerRow.forEach((header, index) => {
                 const cleanHeader = header.trim().toLowerCase();
@@ -386,16 +398,13 @@
             const selectedCompany = document.getElementById('company-filter').value;
             const selectedRole = document.getElementById('role-filter').value;
 
-            const filteredRows = [globalDataGrid[0]]; // Always preserve header row
+            const filteredRows = [globalDataGrid[0]];
 
             for (let i = 1; i < globalDataGrid.length; i++) {
                 const row = globalDataGrid[i];
                 
-                // 1. Dropdown Filter Matches
                 const matchesCompany = !selectedCompany || (companyColIndex !== -1 && row[companyColIndex]?.trim() === selectedCompany);
                 const matchesRole = !selectedRole || (roleColIndex !== -1 && row[roleColIndex]?.trim() === selectedRole);
-                
-                // 2. Search Text Matches
                 const matchesSearch = !searchQuery || row.some(cell => cell.toLowerCase().includes(searchQuery));
 
                 if (matchesCompany && matchesRole && matchesSearch) {
@@ -444,7 +453,7 @@
                         actionButton.target = "_blank";
                         actionButton.className = "view-btn";
                         
-                        // Inline Vector-SVG PDF representation element
+                        // Vector SVG Icon
                         actionButton.innerHTML = `
                             <svg class="pdf-icon" viewBox="0 0 384 512">
                                 <path d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 53.7-26.8-11-5.1-19.6-19.2-25.3-35.9zm-124.5 68.2c-16.3 0-21.6 13.1-21.6 23.9 0 20.5 22.8 38.7 54.5 38.7 14.6 0 21.7-6.5 24-12.4-5.3-22.1-41.2-50.2-56.9-50.2zm238.1-259.5H224c-13.3 0-24 10.7-24 24v110.1c11.9-10.7 27.5-21.4 44.8-31.5 21.1-12.3 27-26.2 27-37 0-12.2-11.5-23.6-24-23.6zM384 121.9v342.2c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V48c0-26.5 21.5-48 48-48h147.9c12.7 0 25 5.1 34 14.1l110 110c9 9 14.1 21.3 14.1 33.8zm-113.1 32c0-3.6-2.9-6.5-6.5-6.5H240v29.3c0 3.6 2.9 6.5 6.5 6.5h24.4c3.6 0 6.5-2.9 6.5-6.5v-22.8zM100.8 450c-23.3 0-48.4-12.8-48.4-42.3 0-24 16.2-46.1 48.3-46.1 20 0 46.2 20.3 64.9 39.5 23.2-30.8 44.1-73.6 56.4-114.1-11.8-36.5-16.1-75.3-7.5-90 8.7-14.8 24.1-23 37.9-23 25.5 0 41.2 22.8 41.2 46.1 0 25.5-17.7 54.1-44.5 73-34.2 24.2-76.1 43.1-105.1 54.9-12.9 22-24.1 47.3-33 71.7 34.6 23.9 65 37.3 84 37.3 32.7 0 44.7-22.1 44.7-34.6 0-33.8-51.2-50.5-81.8-14.5-5.9 7-10 17.1-12.4 22.7-5.3 11.2-17.6 12.3-26.4 12.3z"/>
