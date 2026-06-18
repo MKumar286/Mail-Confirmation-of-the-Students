@@ -19,7 +19,7 @@
             background: radial-gradient(circle at 10% 20%, rgba(4, 21, 45, 1) 0%, rgba(13, 50, 66, 1) 35%, rgba(41, 15, 62, 1) 75%, rgba(2, 6, 23, 1) 100%);
             background-attachment: fixed;
             color: #f8fafc;
-            padding: 40px 20px;
+            padding: 15px 15px; /* Decreased top/side padding to pull headers upward */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -28,12 +28,12 @@
         /* Branding Header Section Container */
         .header-section {
             text-align: center;
-            margin-bottom: 35px;
+            margin-bottom: 20px; /* Reduced to pull the table up closer */
             width: 100%;
             max-width: 1200px;
         }
 
-        /* Heading 1: MGIT - Decreased size, proper casing style */
+        /* Heading 1: MGIT - Capitalized naturally via proper Title Case */
         .main-heading {
             font-size: 2.1rem;
             font-weight: 700;
@@ -41,25 +41,25 @@
             background: linear-gradient(135deg, #2dd4bf 0%, #38bdf8 50%, #a855f7 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
+            margin-bottom: 4px; /* Minimal gap */
         }
 
         /* Heading 2: Training & Placement Cell */
         .sub-heading {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: 500;
             letter-spacing: 0.02em;
             color: #cbd5e1;
-            margin-bottom: 16px;
+            margin-bottom: 8px; /* Minimal gap */
             opacity: 0.95;
         }
 
         /* Heading 3: Mail Confirmation Context Box */
         .context-heading {
             display: inline-block;
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: 400;
-            padding: 8px 22px;
+            padding: 6px 18px;
             background: linear-gradient(90deg, rgba(45, 212, 191, 0.12) 0%, rgba(168, 85, 247, 0.12) 100%);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 50px;
@@ -105,15 +105,15 @@
         }
 
         th, td {
-            padding: 14px 22px;
-            text-align: left;
+            padding: 12px 20px;
+            text-align: center; /* Arranges all your data perfectly in the middle */
             white-space: nowrap; /* Forces columns to dynamically stretch to fit your text perfectly */
             font-size: 0.95rem;
         }
 
-        /* Header Row Styles */
+        /* Solid Table Header Styles */
         th {
-            background: linear-gradient(135deg, #092332 0%, #1d0f2b 100%);
+            background-color: #0f2e4a; /* Solid Deep Sapphire Slate background */
             color: #2dd4bf;
             font-weight: 600;
             letter-spacing: 0.01em;
