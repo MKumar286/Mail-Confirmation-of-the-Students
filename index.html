@@ -4,17 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Sheet Data Viewer</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             margin: 20px;
             background-color: #f4f6f9;
             color: #333;
         }
         .table-container {
             width: 100%;
-            overflow-x: auto; /* Adds smooth horizontal scrollbar if columns overflow */
+            overflow-x: auto; /* Adds custom scrollbar if data stretches wide */
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             border-radius: 8px;
             background: white;
@@ -22,21 +21,19 @@
         /* Structural layout for auto-adjusting columns */
         table {
             border-collapse: collapse;
-            width: max-content; /* Dynamically shrinks/grows to exactly fit the content width */
-            min-width: 100%;    /* Spans full screen width if data is sparse */
+            width: max-content; /* Dynamically forces table columns to text width */
+            min-width: 100%;    
         }
         th, td {
             border-bottom: 1px solid #e1e4e8;
             padding: 12px 16px;
             text-align: left;
-            white-space: nowrap; /* Forces columns to expand to the exact text width */
+            white-space: nowrap; /* Prevents text from breaking into multiple lines */
         }
         th {
             background-color: #1f2937;
             color: #ffffff;
             font-weight: 600;
-            position: sticky;
-            top: 0;
         }
         tr:nth-child(even) td {
             background-color: #f8fafc;
@@ -44,7 +41,7 @@
         tr:hover td {
             background-color: #f1f5f9;
         }
-        .loading {
+        .loading-text {
             padding: 20px;
             font-style: italic;
             color: #666;
@@ -56,7 +53,7 @@
     <h2>Live Data Viewer</h2>
     
     <div class="table-container">
-        <div id="loading-state" class="loading">Loading live data from Google Sheets...</div>
+        <div id="status-message" class="loading-text">Loading live data from Google Sheets...</div>
         <table id="sheet-table" style="display: none;">
             <thead id="table-head"></thead>
             <tbody id="table-body"></tbody>
@@ -64,76 +61,50 @@
     </div>
 
     <script>
-        // STABLE GOOGLE API ENDPOINT (Bypasses the 404 redirect bug)
-        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQVGHSnygzd6lIkieye30zp-iVX_unEpKnZ_I3m__BhX0NfHicM_WvEJmo25mONaw/gviz/tq?tqx=out:csv&gid=1824938792';
-
-        async function loadSheetData() {
+        // Callback function that Google automatically passes the data to
+        function handleGoogleSheetData(jsonResponse) {
             try {
-                const response = await fetch(csvUrl);
-                if (!response.ok) throw new Error('Network response was not ok');
+                const tableHead = document.getElementById('table-head');
+                const tableBody = document.getElementById('table-body');
                 
-                const csvText = await response.text();
-                
-                // Parse CSV using PapaParse
-                Papa.parse(csvText, {
-                    skipEmptyLines: true,
-                    complete: function(results) {
-                        renderTable(results.data);
-                    },
-                    error: function(err) {
-                        throw new Error(err.message);
-                    }
+                // Extract columns and rows from Google's complex JSON payload
+                const columns = jsonResponse.table.cols;
+                const rows = jsonResponse.table.rows;
+
+                // 1. Render Headers
+                const headerTr = document.createElement('tr');
+                columns.forEach(col => {
+                    const th = document.createElement('th');
+                    // Fallback to empty string if a column header lacks a text value
+                    th.textContent = col.label ? col.label : "";
+                    headerTr.appendChild(th);
                 });
-            } catch (error) {
-                console.error("Error loading sheet:", error);
-                document.getElementById('loading-state').innerHTML = 
-                    `<span style="color: red;">Error loading data. Verify that the Google Sheet sharing permissions are set to "Anyone with the link can view".</span>`;
+                tableHead.appendChild(headerTr);
+
+                // 2. Render Rows
+                rows.forEach(row => {
+                    const tr = document.createElement('tr');
+                    row.c.forEach(cell => {
+                        const td = document.createElement('td');
+                        // Pull the formatted cell text value safely
+                        td.textContent = cell && cell.f ? cell.f : (cell && cell.v ? cell.v : "");
+                        tr.appendChild(td);
+                    });
+                    tableBody.appendChild(tr);
+                });
+
+                // Update Display States
+                document.getElementById('status-message').style.display = 'none';
+                document.getElementById('sheet-table').style.display = 'table';
+
+            } catch (err) {
+                console.error("Parsing Error:", err);
+                document.getElementById('status-message').innerHTML = "<span style='color:red;'>Failed to map data layout. Ensure columns match properly.</span>";
             }
         }
-
-        function renderTable(data) {
-            if (data.length === 0) {
-                document.getElementById('loading-state').textContent = "No data found in the sheet.";
-                return;
-            }
-
-            const headContainer = document.getElementById('table-head');
-            const bodyContainer = document.getElementById('table-body');
-            
-            // Clear prior contents
-            headContainer.innerHTML = "";
-            bodyContainer.innerHTML = "";
-
-            // 1. Build Header Row
-            const headerRow = document.createElement('tr');
-            data[0].forEach(headerText => {
-                const th = document.createElement('th');
-                th.textContent = headerText;
-                headerRow.appendChild(th);
-            });
-            headContainer.appendChild(headerRow);
-
-            // 2. Build Data Rows
-            for (let i = 1; i < data.length; i++) {
-                const rowData = data[i];
-                const tr = document.createElement('tr');
-                
-                rowData.forEach(cellText => {
-                    const td = document.createElement('td');
-                    td.textContent = cellText;
-                    tr.appendChild(td);
-                });
-                bodyContainer.appendChild(tr);
-            }
-
-            // UI adjustments
-            document.getElementById('loading-state').style.display = 'none';
-            document.getElementById('sheet-table').style.display = 'table';
-        }
-
-        // Initialize fetching on page load
-        loadSheetData();
     </script>
+
+    <script src="https://docs.google.com/spreadsheets/d/1vQVGHSnygzd6lIkieye30zp-iVX_unEpKnZ_I3m__BhX0NfHicM_WvEJmo25mONaw/gviz/tq?tqx=responseHandler:handleGoogleSheetData&gid=1824938792"></script>
 
 </body>
 </html>
