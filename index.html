@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MGIT - Placement Cell Mail Confirmation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <style>
-        /* Modern Mesmerizing Gradient Background & Reset */
+        /* Reset and Base Layout */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -14,7 +15,8 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             min-height: 100vh;
-            background: radial-gradient(circle at 0% 0%, #0f172a 0%, #1e1b4b 30%, #311042 70%, #020617 100%);
+            /* Mesmerizing Mixed Gradient: Deep Midnight Blue, Vivid Emerald Teal, and Royal Violet */
+            background: radial-gradient(circle at 10% 20%, rgba(4, 21, 45, 1) 0%, rgba(13, 50, 66, 1) 35%, rgba(41, 15, 62, 1) 75%, rgba(2, 6, 23, 1) 100%);
             background-attachment: fixed;
             color: #f8fafc;
             padding: 40px 20px;
@@ -26,46 +28,42 @@
         /* Branding Header Section Container */
         .header-section {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
             width: 100%;
             max-width: 1200px;
         }
 
-        /* Heading 1: MGIT */
+        /* Heading 1: MGIT - Decreased size, proper casing style */
         .main-heading {
-            font-size: 2.8rem;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            background: linear-gradient(135deg, #38bdf8 10%, #6366f1 50%, #ec4899 90%);
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #2dd4bf 0%, #38bdf8 50%, #a855f7 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 4px 20px rgba(99, 102, 241, 0.15);
-            margin-bottom: 8px;
-            text-transform: uppercase;
+            margin-bottom: 10px;
         }
 
         /* Heading 2: Training & Placement Cell */
         .sub-heading {
-            font-size: 1.5rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
+            font-size: 1.3rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
             color: #cbd5e1;
-            text-transform: uppercase;
             margin-bottom: 16px;
-            opacity: 0.9;
+            opacity: 0.95;
         }
 
         /* Heading 3: Mail Confirmation Context Box */
         .context-heading {
             display: inline-block;
-            font-size: 1.1rem;
-            font-weight: 500;
-            padding: 8px 20px;
-            background: linear-gradient(90deg, rgba(236, 72, 153, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.05rem;
+            font-weight: 400;
+            padding: 8px 22px;
+            background: linear-gradient(90deg, rgba(45, 212, 191, 0.12) 0%, rgba(168, 85, 247, 0.12) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 50px;
-            color: #f472b6;
-            letter-spacing: 0.02em;
+            color: #2dd4bf;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
@@ -73,11 +71,11 @@
         .table-card {
             width: 100%;
             max-width: 1400px;
-            background: rgba(15, 23, 42, 0.45);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
+            background: rgba(10, 25, 41, 0.55);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             overflow: hidden;
         }
@@ -87,44 +85,44 @@
             overflow-x: auto;
         }
 
-        /* Custom Scrollbars to match dark mesmerizing theme */
+        /* Custom Scrollbars to match theme colors */
         .table-responsive-wrapper::-webkit-scrollbar {
             height: 8px;
         }
         .table-responsive-wrapper::-webkit-scrollbar-track {
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(10, 25, 41, 0.6);
         }
         .table-responsive-wrapper::-webkit-scrollbar-thumb {
-            background: linear-gradient(90deg, #6366f1, #ec4899);
+            background: linear-gradient(90deg, #2dd4bf, #a855f7);
             border-radius: 4px;
         }
 
         /* Strict Structural Auto-Width Table Rules */
         table {
             border-collapse: collapse;
-            width: max-content; /* Dynamically sizes to maximum content space */
+            width: max-content; 
             min-width: 100%;
         }
 
         th, td {
-            padding: 16px 24px;
+            padding: 14px 22px;
             text-align: left;
-            white-space: nowrap; /* Forces columns to stretch outwards to text limits */
+            white-space: nowrap; /* Forces columns to dynamically stretch to fit your text perfectly */
             font-size: 0.95rem;
         }
 
-        /* Modern Gradient Table Header Row */
+        /* Header Row Styles */
         th {
-            background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%);
-            color: #38bdf8;
+            background: linear-gradient(135deg, #092332 0%, #1d0f2b 100%);
+            color: #2dd4bf;
             font-weight: 600;
-            letter-spacing: 0.02em;
-            border-bottom: 2px solid rgba(56, 189, 248, 0.2);
+            letter-spacing: 0.01em;
+            border-bottom: 2px solid rgba(45, 212, 191, 0.2);
         }
 
         /* Alternating Data Rows Layout */
         tr {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
             transition: background-color 0.2s ease;
         }
 
@@ -133,20 +131,21 @@
         }
 
         tr:hover td {
-            background-color: rgba(99, 102, 241, 0.08);
+            background-color: rgba(45, 212, 191, 0.08);
             color: #ffffff;
         }
 
-        /* Smooth UI Loading Screen Block */
+        /* UI Loading / Error Layout */
         .status-container {
-            padding: 40px;
+            padding: 45px;
             text-align: center;
             font-size: 1.1rem;
             color: #94a3b8;
-            animation: pulse 2s infinite ease-in-out;
         }
-
-        @keyframes pulse {
+        .pulse {
+            animation: pulse-animation 2s infinite ease-in-out;
+        }
+        @keyframes pulse-animation {
             0%, 100% { opacity: 0.6; }
             50% { opacity: 1; }
         }
@@ -161,7 +160,7 @@
     </div>
     
     <div class="table-card">
-        <div id="status-display" class="status-container">Loading secured placement manifest matrix...</div>
+        <div id="status-display" class="status-container pulse">Loading live placement confirmation roster...</div>
         <div class="table-responsive-wrapper">
             <table id="sheet-table" style="display: none;">
                 <thead id="table-head"></thead>
@@ -171,47 +170,71 @@
     </div>
 
     <script>
-        // Callback handler converting JSON structural streams into HTML elements safely
-        function handleGoogleSheetData(jsonResponse) {
-            try {
-                const tableHead = document.getElementById('table-head');
-                const tableBody = document.getElementById('table-body');
-                
-                const columns = jsonResponse.table.cols;
-                const rows = jsonResponse.table.rows;
+        // Your Exact Google Sheet CSV Export Link
+        const yourSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQVGHSnygzd6lIkieye30zp-iVX_unEpKnZ_I3m__BhX0NfHicM_WvEJmo25mONaw/pub?gid=1824938792&single=true&output=csv';
 
-                // 1. Map Header Cells
-                const headerTr = document.createElement('tr');
-                columns.forEach(col => {
-                    const th = document.createElement('th');
-                    th.textContent = col.label ? col.label : "";
-                    headerTr.appendChild(th);
-                });
-                tableHead.appendChild(headerTr);
-
-                // 2. Map Data Body Rows
-                rows.forEach(row => {
-                    const tr = document.createElement('tr');
-                    row.c.forEach(cell => {
-                        const td = document.createElement('td');
-                        td.textContent = cell && cell.f ? cell.f : (cell && cell.v ? cell.v : "");
-                        tr.appendChild(td);
-                    });
-                    tableBody.appendChild(tr);
-                });
-
-                // Toggle views seamlessly upon calculation execution completions
-                document.getElementById('status-display').style.display = 'none';
-                document.getElementById('sheet-table').style.display = 'table';
-
-            } catch (err) {
-                console.error("Layout Exception:", err);
-                document.getElementById('status-display').innerHTML = "<span style='color:#ef4444;'>Failed to structure spreadsheet columns into layout.</span>";
-            }
+        function initSheetDownload() {
+            // Uses PapaParse's built-in remote download engine to safely pull data
+            Papa.parse(yourSpreadsheetUrl, {
+                download: true,
+                skipEmptyLines: true,
+                complete: function(results) {
+                    renderHtmlTable(results.data);
+                },
+                error: function(err) {
+                    console.error("Data Load Error:", err);
+                    const statusBox = document.getElementById('status-display');
+                    statusBox.classList.remove('pulse');
+                    statusBox.innerHTML = `<span style="color:#f43f5e; font-weight:500;">
+                        Unable to pull data. If your sheet belongs to an institutional account, please make sure 
+                        "Publish to web" visibility permissions are set to "Public" and not restricted to your organization domain.
+                    </span>`;
+                }
+            });
         }
-    </script>
 
-    <script src="https://docs.google.com/spreadsheets/d/1vQVGHSnygzd6lIkieye30zp-iVX_unEpKnZ_I3m__BhX0NfHicM_WvEJmo25mONaw/gviz/tq?tqx=responseHandler:handleGoogleSheetData&gid=1824938792"></script>
+        function renderHtmlTable(data) {
+            if (!data || data.length === 0) {
+                document.getElementById('status-display').textContent = "No placement data available inside this matrix sheet tab.";
+                return;
+            }
+
+            const tableHead = document.getElementById('table-head');
+            const tableBody = document.getElementById('table-body');
+            
+            tableHead.innerHTML = "";
+            tableBody.innerHTML = "";
+
+            // 1. Render Header Row
+            const headerTr = document.createElement('tr');
+            data[0].forEach(headerText => {
+                const th = document.createElement('th');
+                th.textContent = headerText;
+                headerTr.appendChild(th);
+            });
+            tableHead.appendChild(headerTr);
+
+            // 2. Render Body Data Rows
+            for (let i = 1; i < data.length; i++) {
+                const rowData = data[i];
+                const tr = document.createElement('tr');
+                
+                rowData.forEach(cellText => {
+                    const td = document.createElement('td');
+                    td.textContent = cellText;
+                    tr.appendChild(td);
+                });
+                tableBody.appendChild(tr);
+            }
+
+            // Reveal Table Layout
+            document.getElementById('status-display').style.display = 'none';
+            document.getElementById('sheet-table').style.display = 'table';
+        }
+
+        // Initialize engine script call on view layout complete
+        window.addEventListener('DOMContentLoaded', initSheetDownload);
+    </script>
 
 </body>
 </html>
