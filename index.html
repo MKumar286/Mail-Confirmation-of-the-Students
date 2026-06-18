@@ -245,12 +245,11 @@
             tableHead.innerHTML = "";
             tableBody.innerHTML = "";
 
-            // 1. Render Header Row
+            // 1. Render Header Row (Fixed the scope typo)
             const headerTr = document.createElement('tr');
             data[0].forEach(headerText => {
                 const th = document.createElement('th');
                 th.textContent = headerText;
-                headerRow.appendChild(th); // Fixed reference variable internally to match block scope configuration
                 headerTr.appendChild(th);
             });
             tableHead.appendChild(headerTr);
