@@ -12,6 +12,10 @@
             margin: 0;
             padding: 0;
         }
+        html, body {
+            /* Crucial: Forces the entire webpage frame to handle horizontal overflow tracking */
+            overflow-x: auto; 
+        }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             min-height: 100vh;
@@ -19,12 +23,23 @@
             background: radial-gradient(circle at 10% 20%, #03000a 0%, #081122 35%, #240533 70%, #000000 100%);
             background-attachment: fixed;
             color: #ffffff;
-            padding: 15px 15px; 
+            padding: 15px 15px 30px 15px; 
             display: flex;
             flex-direction: column;
             align-items: center;
-            overflow-x: hidden;
             position: relative;
+        }
+
+        /* Global Browser Horizontal Scrollbar Styling (Locks to bottom of view screen) */
+        body::-webkit-scrollbar {
+            height: 10px;
+        }
+        body::-webkit-scrollbar-track {
+            background: rgba(5, 3, 10, 0.9);
+        }
+        body::-webkit-scrollbar-thumb {
+            background: linear-gradient(90deg, #00e5ff, #ff007f);
+            border-radius: 10px;
         }
 
         /* 24K HD Premium Hyper-Glow Shifting Blobs */
@@ -64,14 +79,14 @@
             text-align: center;
             margin-bottom: 15px; 
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px;
             position: relative;
             z-index: 2;
         }
 
         .main-heading {
             font-size: 2.1rem;
-            font-weight: 800; /* Ultra-bold */
+            font-weight: 800; 
             letter-spacing: -0.02em;
             background: linear-gradient(135deg, #00e5ff 0%, #ff007f 50%, #e040fb 100%);
             -webkit-background-clip: text;
@@ -82,7 +97,7 @@
 
         .sub-heading {
             font-size: 1.25rem;
-            font-weight: 700; /* Made Bold */
+            font-weight: 700; 
             letter-spacing: 0.02em;
             color: #e2e8f0;
             margin-bottom: 8px; 
@@ -92,9 +107,9 @@
         .context-heading {
             display: inline-block;
             font-size: 1rem;
-            font-weight: 700; /* Made Bold */
+            font-weight: 700; 
             padding: 6px 18px;
-            background: linear-gradient(90deg, rgba(0, 229, 255, 0.2) 0%, rgba(ff, 0, 127, 0.2) 100%);
+            background: linear-gradient(90deg, rgba(0, 229, 255, 0.2) 0%, rgba(255, 0, 127, 0.2) 100%);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50px;
             color: #ff007f;
@@ -113,12 +128,6 @@
             z-index: 2;
         }
 
-        @media (max-width: 768px) {
-            .controls-panel {
-                grid-template-columns: 1fr;
-            }
-        }
-
         .input-control {
             width: 100%;
             padding: 11px 16px;
@@ -128,7 +137,7 @@
             border-radius: 8px;
             color: #ffffff;
             font-size: 0.95rem;
-            font-weight: 700; /* Made input text bold */
+            font-weight: 700; 
             outline: none;
             transition: all 0.2s ease;
             box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
@@ -150,31 +159,19 @@
             width: 100%;
             max-width: 1400px;
             background: linear-gradient(135deg, rgba(16, 12, 28, 0.75) 0%, rgba(8, 10, 20, 0.8) 100%);
-            backdrop-filter: blur(40px); /* Enhanced 3D Glass clarity depth */
+            backdrop-filter: blur(40px); 
             -webkit-backdrop-filter: blur(40px);
-            border: 1px solid rgba(255, 255, 255, 0.12); /* Crisp solid perimeter border */
+            border: 1px solid rgba(255, 255, 255, 0.12); 
             border-radius: 16px;
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255,255,255,0.1); /* Real 3D depth styling */
-            overflow: hidden;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255,255,255,0.1); 
+            overflow: visible; /* Changed from hidden to let the frame handle scrolling layout */
             position: relative;
             z-index: 1;
         }
 
         .table-responsive-wrapper {
             width: 100%;
-            overflow-x: auto;
-        }
-
-        /* Custom HD Scrollbars */
-        .table-responsive-wrapper::-webkit-scrollbar {
-            height: 9px;
-        }
-        .table-responsive-wrapper::-webkit-scrollbar-track {
-            background: rgba(5, 3, 10, 0.8);
-        }
-        .table-responsive-wrapper::-webkit-scrollbar-thumb {
-            background: linear-gradient(90deg, #00e5ff, #ff007f);
-            border-radius: 10px;
+            overflow: visible; /* Removed isolated wrapper tracking */
         }
 
         /* Strict Structural Auto-Width Table Rules */
@@ -193,11 +190,11 @@
             text-shadow: 0 1px 2px rgba(0,0,0,0.8);
         }
 
-        /* Solid Table Header Styles - Premium Sapphire Contrast */
+        /* Solid Table Header Styles */
         th {
             background-color: #051d33; 
             color: #00e5ff;
-            font-weight: 800; /* Ultra-bold Headers */
+            font-weight: 800; 
             letter-spacing: 0.02em;
             border-bottom: 3px solid rgba(0, 229, 255, 0.4);
             box-shadow: 0 4px 10px rgba(0,0,0,0.4);
@@ -210,7 +207,7 @@
         }
 
         td {
-            font-weight: 600; /* CRITICAL: Everything Bolded */
+            font-weight: 600; 
             color: #ffffff;
         }
 
@@ -235,7 +232,7 @@
             text-decoration: none;
             border-radius: 6px;
             font-size: 0.85rem;
-            font-weight: 800; /* Bolded button text */
+            font-weight: 800; 
             box-shadow: 0 3px 10px rgba(255, 0, 85, 0.4);
             transition: all 0.2s ease;
         }
