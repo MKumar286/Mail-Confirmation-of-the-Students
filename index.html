@@ -3,134 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sheet Data Viewer</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <title>MGIT - Placement Cell Mail Confirmation</title>
     <style>
+        /* Modern Mesmerizing Gradient Background & Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f6f9;
-            color: #333;
+            min-height: 100vh;
+            background: radial-gradient(circle at 0% 0%, #0f172a 0%, #1e1b4b 30%, #311042 70%, #020617 100%);
+            background-attachment: fixed;
+            color: #f8fafc;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .table-container {
+
+        /* Branding Header Section Container */
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
             width: 100%;
-            overflow-x: auto; /* Adds a smooth horizontal scrollbar if table is wider than screen */
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            border-radius: 8px;
-            background: white;
+            max-width: 1200px;
         }
-        /* The structural layout for auto-adjusting columns */
+
+        /* Heading 1: MGIT */
+        .main-heading {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #38bdf8 10%, #6366f1 50%, #ec4899 90%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 20px rgba(99, 102, 241, 0.15);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        /* Heading 2: Training & Placement Cell */
+        .sub-heading {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            opacity: 0.9;
+        }
+
+        /* Heading 3: Mail Confirmation Context Box */
+        .context-heading {
+            display: inline-block;
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 8px 20px;
+            background: linear-gradient(90deg, rgba(236, 72, 153, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: #f472b6;
+            letter-spacing: 0.02em;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Glassmorphic Table Container Card */
+        .table-card {
+            width: 100%;
+            max-width: 1400px;
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+
+        .table-responsive-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        /* Custom Scrollbars to match dark mesmerizing theme */
+        .table-responsive-wrapper::-webkit-scrollbar {
+            height: 8px;
+        }
+        .table-responsive-wrapper::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        .table-responsive-wrapper::-webkit-scrollbar-thumb {
+            background: linear-gradient(90deg, #6366f1, #ec4899);
+            border-radius: 4px;
+        }
+
+        /* Strict Structural Auto-Width Table Rules */
         table {
             border-collapse: collapse;
-            width: max-content; /* Dynamically shrinks/grows to exactly fit the content width */
-            min-width: 100%;    /* Ensures it spans at least full screen width if data is sparse */
+            width: max-content; /* Dynamically sizes to maximum content space */
+            min-width: 100%;
         }
+
         th, td {
-            border-bottom: 1px solid #e1e4e8;
-            padding: 12px 16px;
+            padding: 16px 24px;
             text-align: left;
-            /* Crucial: Prevents text wrapping, forcing columns to expand to the exact text width */
-            white-space: nowrap; 
+            white-space: nowrap; /* Forces columns to stretch outwards to text limits */
+            font-size: 0.95rem;
         }
+
+        /* Modern Gradient Table Header Row */
         th {
-            background-color: #1f2937;
-            color: #ffffff;
+            background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%);
+            color: #38bdf8;
             font-weight: 600;
-            position: sticky;
-            top: 0; /* Keeps header visible if you scroll vertically */
+            letter-spacing: 0.02em;
+            border-bottom: 2px solid rgba(56, 189, 248, 0.2);
         }
-        tr:nth-child(even) td {
-            background-color: #f8fafc;
+
+        /* Alternating Data Rows Layout */
+        tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            transition: background-color 0.2s ease;
         }
+
+        tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.01);
+        }
+
         tr:hover td {
-            background-color: #f1f5f9; /* Subtle row highlight on hover */
+            background-color: rgba(99, 102, 241, 0.08);
+            color: #ffffff;
         }
-        .loading {
-            padding: 20px;
-            font-style: italic;
-            color: #666;
+
+        /* Smooth UI Loading Screen Block */
+        .status-container {
+            padding: 40px;
+            text-align: center;
+            font-size: 1.1rem;
+            color: #94a3b8;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
         }
     </style>
 </head>
 <body>
 
-    <h2>Live Data Viewer</h2>
+    <div class="header-section">
+        <h1 class="main-heading">Mahatma Gandhi Institute of Technology (A)</h1>
+        <h2 class="sub-heading">Training & Placement Cell</h2>
+        <div class="context-heading">Mail Confirmation of the Selected Students by the Company</div>
+    </div>
     
-    <div class="table-container">
-        <div id="loading-state" class="loading">Loading live data from Google Sheets...</div>
-        <table id="sheet-table" style="display: none;">
-            <thead id="table-head"></thead>
-            <tbody id="table-body"></tbody>
-        </table>
+    <div class="table-card">
+        <div id="status-display" class="status-container">Loading secured placement manifest matrix...</div>
+        <div class="table-responsive-wrapper">
+            <table id="sheet-table" style="display: none;">
+                <thead id="table-head"></thead>
+                <tbody id="table-body"></tbody>
+            </table>
+        </div>
     </div>
 
     <script>
-        // Your specific Google Sheet CSV Export URL
-        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQVGHSnygzd6lIkieye30zp-iVX_unEpKnZ_I3m__BhX0NfHicM_WvEJmo25mONaw/pub?gid=1824938792&single=true&output=csv';
-
-        async function loadSheetData() {
+        // Callback handler converting JSON structural streams into HTML elements safely
+        function handleGoogleSheetData(jsonResponse) {
             try {
-                const response = await fetch(csvUrl);
-                if (!response.ok) throw new Error('Network response was not ok');
+                const tableHead = document.getElementById('table-head');
+                const tableBody = document.getElementById('table-body');
                 
-                const csvText = await response.text();
-                
-                // Parse CSV using PapaParse (handles quotes, commas within cells, etc.)
-                Papa.parse(csvText, {
-                    skipEmptyLines: true,
-                    complete: function(results) {
-                        renderTable(results.data);
-                    },
-                    error: function(err) {
-                        throw new Error(err.message);
-                    }
+                const columns = jsonResponse.table.cols;
+                const rows = jsonResponse.table.rows;
+
+                // 1. Map Header Cells
+                const headerTr = document.createElement('tr');
+                columns.forEach(col => {
+                    const th = document.createElement('th');
+                    th.textContent = col.label ? col.label : "";
+                    headerTr.appendChild(th);
                 });
-            } catch (error) {
-                console.error("Error loading sheet:", error);
-                document.getElementById('loading-state').innerHTML = 
-                    `<span style="color: red;">Error loading data. Verify that the Google Sheet is actively published to the web.</span>`;
+                tableHead.appendChild(headerTr);
+
+                // 2. Map Data Body Rows
+                rows.forEach(row => {
+                    const tr = document.createElement('tr');
+                    row.c.forEach(cell => {
+                        const td = document.createElement('td');
+                        td.textContent = cell && cell.f ? cell.f : (cell && cell.v ? cell.v : "");
+                        tr.appendChild(td);
+                    });
+                    tableBody.appendChild(tr);
+                });
+
+                // Toggle views seamlessly upon calculation execution completions
+                document.getElementById('status-display').style.display = 'none';
+                document.getElementById('sheet-table').style.display = 'table';
+
+            } catch (err) {
+                console.error("Layout Exception:", err);
+                document.getElementById('status-display').innerHTML = "<span style='color:#ef4444;'>Failed to structure spreadsheet columns into layout.</span>";
             }
         }
-
-        function renderTable(data) {
-            if (data.length === 0) {
-                document.getElementById('loading-state').textContent = "No data found in the sheet.";
-                return;
-            }
-
-            const headContainer = document.getElementById('table-head');
-            const bodyContainer = document.getElementById('table-body');
-            
-            // 1. Build Header Row (First row of your sheet)
-            const headerRow = document.createElement('tr');
-            data[0].forEach(headerText => {
-                const th = document.createElement('th');
-                th.textContent = headerText;
-                headerRow.appendChild(th);
-            });
-            headContainer.appendChild(headerRow);
-
-            // 2. Build Data Rows
-            for (let i = 1; i < data.length; i++) {
-                const rowData = data[i];
-                const tr = document.createElement('tr');
-                
-                rowData.forEach(cellText => {
-                    const td = document.createElement('td');
-                    td.textContent = cellText;
-                    tr.appendChild(td);
-                });
-                bodyContainer.appendChild(tr);
-            }
-
-            // Hide loading message and display the completed table
-            document.getElementById('loading-state').style.display = 'none';
-            document.getElementById('sheet-table').style.display = 'table';
-        }
-
-        // Initialize fetching on page load
-        loadSheetData();
     </script>
+
+    <script src="https://docs.google.com/spreadsheets/d/1vQVGHSnygzd6lIkieye30zp-iVX_unEpKnZ_I3m__BhX0NfHicM_WvEJmo25mONaw/gviz/tq?tqx=responseHandler:handleGoogleSheetData&gid=1824938792"></script>
 
 </body>
 </html>
