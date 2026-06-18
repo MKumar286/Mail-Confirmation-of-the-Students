@@ -148,6 +148,7 @@
             text-align: center; 
             white-space: nowrap; 
             font-size: 0.95rem;
+            vertical-align: middle;
         }
 
         /* Solid Table Header Styles */
@@ -172,6 +173,25 @@
         tr:hover td {
             background-color: rgba(236, 72, 153, 0.08);
             color: #ffffff;
+        }
+
+        /* Styled Document Button Links */
+        .doc-link {
+            display: inline-block;
+            padding: 6px 14px;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: #ffffff !important;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+            transition: all 0.2s ease;
+        }
+        .doc-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.5);
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
         }
 
         /* UI Loading Layout */
@@ -233,6 +253,16 @@
             });
         }
 
+        // Helper function to check if a text string is a valid web link
+        function isValidUrl(string) {
+            try {
+                const url = new URL(string.trim());
+                return url.protocol === "http:" || url.protocol === "https:";
+            } catch (_) {
+                return false;  
+            }
+        }
+
         function renderHtmlTable(data) {
             if (!data || data.length === 0) {
                 document.getElementById('status-display').textContent = "No data available inside this matrix tab.";
@@ -245,7 +275,7 @@
             tableHead.innerHTML = "";
             tableBody.innerHTML = "";
 
-            // 1. Render Header Row (Fixed the scope typo)
+            // 1. Render Header Row
             const headerTr = document.createElement('tr');
             data[0].forEach(headerText => {
                 const th = document.createElement('th');
@@ -261,7 +291,21 @@
                 
                 rowData.forEach(cellText => {
                     const td = document.createElement('td');
-                    td.textContent = cellText;
+                    const cleanText = cellText.trim();
+
+                    // If the cell contains an active web link (PDF, Doc, Drive Link, etc.)
+                    if (isValidUrl(cleanText)) {
+                        const actionButton = document.createElement('a');
+                        actionButton.href = cleanText;
+                        actionButton.target = "_blank"; // Opens the document in a clean new browser tab
+                        actionButton.className = "doc-link";
+                        actionButton.textContent = "View Document";
+                        td.appendChild(actionButton);
+                    } else {
+                        // Standard cell text
+                        td.textContent = cellText;
+                    }
+                    
                     tr.appendChild(td);
                 });
                 tableBody.appendChild(tr);
