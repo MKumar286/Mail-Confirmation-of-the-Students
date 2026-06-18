@@ -13,33 +13,36 @@
             padding: 0;
         }
         html, body {
-            /* Crucial: Forces the entire webpage frame to handle horizontal overflow tracking */
-            overflow-x: auto; 
+            /* Crucial: Forces explicit horizontal track while completely stripping out the vertical track */
+            overflow-x: scroll !important; 
+            overflow-y: hidden !important;
+            height: 100vh;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            min-height: 100vh;
             /* Ultra High-Fidelity Deep Cosmic Neon Mesh Gradient */
             background: radial-gradient(circle at 10% 20%, #03000a 0%, #081122 35%, #240533 70%, #000000 100%);
             background-attachment: fixed;
             color: #ffffff;
-            padding: 15px 15px 30px 15px; 
+            padding: 15px 15px 40px 15px; 
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
         }
 
-        /* Global Browser Horizontal Scrollbar Styling (Locks to bottom of view screen) */
-        body::-webkit-scrollbar {
-            height: 10px;
+        /* Global Screen Horizontal Scrollbar Styling (Always remains pinned to window bottom) */
+        html::-webkit-scrollbar, body::-webkit-scrollbar {
+            height: 12px;
+            display: block !important;
         }
-        body::-webkit-scrollbar-track {
-            background: rgba(5, 3, 10, 0.9);
+        html::-webkit-scrollbar-track, body::-webkit-scrollbar-track {
+            background: rgba(5, 3, 10, 0.95);
         }
-        body::-webkit-scrollbar-thumb {
+        html::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb {
             background: linear-gradient(90deg, #00e5ff, #ff007f);
             border-radius: 10px;
+            border: 2px solid #05030a;
         }
 
         /* 24K HD Premium Hyper-Glow Shifting Blobs */
@@ -164,14 +167,14 @@
             border: 1px solid rgba(255, 255, 255, 0.12); 
             border-radius: 16px;
             box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255,255,255,0.1); 
-            overflow: visible; /* Changed from hidden to let the frame handle scrolling layout */
+            overflow: visible; 
             position: relative;
             z-index: 1;
         }
 
         .table-responsive-wrapper {
             width: 100%;
-            overflow: visible; /* Removed isolated wrapper tracking */
+            overflow: visible; 
         }
 
         /* Strict Structural Auto-Width Table Rules */
@@ -200,7 +203,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.4);
         }
 
-        /* Data Rows Layout - High Contrast Bold Rendering */
+        /* Data Rows Layout */
         tr {
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             transition: background-color 0.15s ease;
@@ -298,7 +301,6 @@
     </div>
 
     <script>
-        // Your Exact Google Sheet CSV Export Link
         const yourSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQVGHSnygzd6lIkieye30zp-iVX_unEpKnZ_I3m__BhX0NfHicM_WvEJmo25mONaw/pub?gid=1824938792&single=true&output=csv';
         
         // --- COLUMN CONFIGURATION ---
@@ -450,7 +452,6 @@
                         actionButton.target = "_blank";
                         actionButton.className = "view-btn";
                         
-                        // Vector SVG Icon
                         actionButton.innerHTML = `
                             <svg class="pdf-icon" viewBox="0 0 384 512">
                                 <path d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 53.7-26.8-11-5.1-19.6-19.2-25.3-35.9zm-124.5 68.2c-16.3 0-21.6 13.1-21.6 23.9 0 20.5 22.8 38.7 54.5 38.7 14.6 0 21.7-6.5 24-12.4-5.3-22.1-41.2-50.2-56.9-50.2zm238.1-259.5H224c-13.3 0-24 10.7-24 24v110.1c11.9-10.7 27.5-21.4 44.8-31.5 21.1-12.3 27-26.2 27-37 0-12.2-11.5-23.6-24-23.6zM384 121.9v342.2c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V48c0-26.5 21.5-48 48-48h147.9c12.7 0 25 5.1 34 14.1l110 110c9 9 14.1 21.3 14.1 33.8zm-113.1 32c0-3.6-2.9-6.5-6.5-6.5H240v29.3c0 3.6 2.9 6.5 6.5 6.5h24.4c3.6 0 6.5-2.9 6.5-6.5v-22.8zM100.8 450c-23.3 0-48.4-12.8-48.4-42.3 0-24 16.2-46.1 48.3-46.1 20 0 46.2 20.3 64.9 39.5 23.2-30.8 44.1-73.6 56.4-114.1-11.8-36.5-16.1-75.3-7.5-90 8.7-14.8 24.1-23 37.9-23 25.5 0 41.2 22.8 41.2 46.1 0 25.5-17.7 54.1-44.5 73-34.2 24.2-76.1 43.1-105.1 54.9-12.9 22-24.1 47.3-33 71.7 34.6 23.9 65 37.3 84 37.3 32.7 0 44.7-22.1 44.7-34.6 0-33.8-51.2-50.5-81.8-14.5-5.9 7-10 17.1-12.4 22.7-5.3 11.2-17.6 12.3-26.4 12.3z"/>
