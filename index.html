@@ -6,35 +6,30 @@
     <title>MGIT - Placement Cell Mail Confirmation</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <style>
-        /* Reset and Base Layout */
+        /* Reset and Frame Constraints */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-        html, body {
-            /* Crucial: Forces explicit horizontal track while completely stripping out the vertical track */
-            overflow-x: scroll !important; 
-            overflow-y: hidden !important;
-            height: 100vh;
+        html {
+            overflow-x: auto;
+            overflow-y: auto; /* Restored vertical screen movement */
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
             /* Ultra High-Fidelity Deep Cosmic Neon Mesh Gradient */
             background: radial-gradient(circle at 10% 20%, #03000a 0%, #081122 35%, #240533 70%, #000000 100%);
             background-attachment: fixed;
             color: #ffffff;
-            padding: 15px 15px 40px 15px; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 20px 20px 40px 20px; 
             position: relative;
         }
 
-        /* Global Screen Horizontal Scrollbar Styling (Always remains pinned to window bottom) */
+        /* Screen-Pinned Custom Horizontal Scrollbar Styling */
         html::-webkit-scrollbar, body::-webkit-scrollbar {
             height: 12px;
-            display: block !important;
         }
         html::-webkit-scrollbar-track, body::-webkit-scrollbar-track {
             background: rgba(5, 3, 10, 0.95);
@@ -77,10 +72,10 @@
             100% { transform: translate(-40px, 40px) scale(0.9); }
         }
 
-        /* Branding Header Section Container */
+        /* Branding Header Section Container - Clean Block Centering */
         .header-section {
             text-align: center;
-            margin-bottom: 15px; 
+            margin: 0 auto 15px auto; 
             width: 100%;
             max-width: 1400px;
             position: relative;
@@ -119,14 +114,14 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 0, 127, 0.2);
         }
 
-        /* Controls Filter Panel Row Below Headings */
+        /* Controls Filter Panel Row - Safe Margin Layout */
         .controls-panel {
             width: 100%;
             max-width: 1400px;
             display: grid;
             grid-template-columns: 2fr 1fr 1fr;
             gap: 15px;
-            margin-bottom: 15px;
+            margin: 0 auto 15px auto;
             position: relative;
             z-index: 2;
         }
@@ -157,24 +152,24 @@
             font-weight: 600;
         }
 
-        /* 24K HD 3D Solid Glassmorphic Container Card */
+        /* 24K HD 3D Solid Glassmorphic Container Card - Strict Overflow Protection */
         .table-card {
-            width: 100%;
+            width: max-content; 
+            min-width: 100%;
             max-width: 1400px;
+            margin: 0 auto;
             background: linear-gradient(135deg, rgba(16, 12, 28, 0.75) 0%, rgba(8, 10, 20, 0.8) 100%);
             backdrop-filter: blur(40px); 
             -webkit-backdrop-filter: blur(40px);
             border: 1px solid rgba(255, 255, 255, 0.12); 
             border-radius: 16px;
             box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255,255,255,0.1); 
-            overflow: visible; 
             position: relative;
             z-index: 1;
         }
 
         .table-responsive-wrapper {
             width: 100%;
-            overflow: visible; 
         }
 
         /* Strict Structural Auto-Width Table Rules */
@@ -182,6 +177,7 @@
             border-collapse: collapse;
             width: max-content; 
             min-width: 100%;
+            table-layout: auto; /* Ensures natural text metrics dictate column sizes */
         }
 
         th, td {
@@ -301,6 +297,7 @@
     </div>
 
     <script>
+        // Your Exact Google Sheet CSV Export Link
         const yourSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQVGHSnygzd6lIkieye30zp-iVX_unEpKnZ_I3m__BhX0NfHicM_WvEJmo25mONaw/pub?gid=1824938792&single=true&output=csv';
         
         // --- COLUMN CONFIGURATION ---
