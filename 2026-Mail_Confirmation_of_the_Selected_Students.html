@@ -3,93 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sheet CSV Viewer</title>
+    <title>Google Sheet Data Viewer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 20px;
-            background-color: #f9f9f9;
+            background-color: #f4f6f9;
+            color: #333;
         }
-        /* The magic for auto-adjusting columns */
+        .table-container {
+            width: 100%;
+            overflow-x: auto; /* Adds a smooth horizontal scrollbar if table is wider than screen */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            background: white;
+        }
+        /* The structural layout for auto-adjusting columns */
         table {
             border-collapse: collapse;
-            width: max-content; /* Shrinks/grows to exactly fit the content */
-            max-width: 100%;    /* Prevents overflowing the screen if too wide */
-            background: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: max-content; /* Dynamically shrinks/grows to exactly fit the content width */
+            min-width: 100%;    /* Ensures it spans at least full screen width if data is sparse */
         }
         th, td {
-            border: 1px solid #dddddd;
+            border-bottom: 1px solid #e1e4e8;
+            padding: 12px 16px;
             text-align: left;
-            padding: 8px 12px;
-            /* Prevents text from wrapping, forcing the column to expand to full text width */
+            /* Crucial: Prevents text wrapping, forcing columns to expand to the exact text width */
             white-space: nowrap; 
         }
         th {
-            background-color: #4CAF50;
-            color: white;
+            background-color: #1f2937;
+            color: #ffffff;
+            font-weight: 600;
+            position: sticky;
+            top: 0; /* Keeps header visible if you scroll vertically */
         }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
+        tr:nth-child(even) td {
+            background-color: #f8fafc;
         }
-        .container {
-            overflow-x: auto; /* Adds a scrollbar if the table is wider than the screen */
+        tr:hover td {
+            background-color: #f1f5f9; /* Subtle row highlight on hover */
+        }
+        .loading {
+            padding: 20px;
+            font-style: italic;
+            color: #666;
         }
     </style>
 </head>
 <body>
 
-    <h2>Live Google Sheet Data (Auto-fit Columns)</h2>
-    <div class="container">
-        <table id="sheet-table">
-            </table>
+    <h2>Live Data Viewer</h2>
+    
+    <div class="table-container">
+        <div id="loading-state" class="loading">Loading live data from Google Sheets...</div>
+        <table id="sheet-table" style="display: none;">
+            <thead id="table-head"></thead>
+            <tbody id="table-body"></tbody>
+        </table>
     </div>
 
     <script>
-        // 1. REPLACE THIS URL WITH YOUR OWN GOOGLE SHEET CSV EXPORT LINK
+        // Your specific Google Sheet CSV Export URL
         const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQVGHSnygzd6lIkieye30zp-iVX_unEpKnZ_I3m__BhX0NfHicM_WvEJmo25mONaw/pub?gid=1824938792&single=true&output=csv';
 
-        // Simple CSV parser that handles basic commas and rows
-        function parseCSV(text) {
-            const lines = text.split("\n");
-            return lines.map(line => {
-                // Basic split by comma (Note: complex sheets with commas inside quotes might need a library like PapaParse)
-                return line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); 
-            });
-        }
-
-        async function fetchAndRenderSheet() {
+        async function loadSheetData() {
             try {
                 const response = await fetch(csvUrl);
-                const csvText = await response.text();
-                const data = parseCSV(csvText);
+                if (!response.ok) throw new Error('Network response was not ok');
                 
-                const table = document.getElementById('sheet-table');
-                table.innerHTML = ""; // Clear table
-
-                data.forEach((row, rowIndex) => {
-                    // Skip completely empty rows
-                    if (row.length === 1 && row[0].trim() === "") return;
-
-                    const tr = document.createElement('tr');
-                    
-                    row.forEach(cell => {
-                        const cellElement = rowIndex === 0 ? document.createElement('th') : document.createElement('td');
-                        // Clean up surrounding quotes from CSV format if they exist
-                        cellElement.textContent = cell.replace(/^"|"$/g, '').trim();
-                        tr.appendChild(cellElement);
-                    });
-                    
-                    table.appendChild(tr);
+                const csvText = await response.text();
+                
+                // Parse CSV using PapaParse (handles quotes, commas within cells, etc.)
+                Papa.parse(csvText, {
+                    skipEmptyLines: true,
+                    complete: function(results) {
+                        renderTable(results.data);
+                    },
+                    error: function(err) {
+                        throw new Error(err.message);
+                    }
                 });
             } catch (error) {
-                console.error("Error fetching sheet data:", error);
-                document.getElementById('sheet-table').innerHTML = "<tr><td>Error loading data. Make sure the sheet is published to the web.</td></tr>";
+                console.error("Error loading sheet:", error);
+                document.getElementById('loading-state').innerHTML = 
+                    `<span style="color: red;">Error loading data. Verify that the Google Sheet is actively published to the web.</span>`;
             }
         }
 
-        // Load the data on page load
-        fetchAndRenderSheet();
+        function renderTable(data) {
+            if (data.length === 0) {
+                document.getElementById('loading-state').textContent = "No data found in the sheet.";
+                return;
+            }
+
+            const headContainer = document.getElementById('table-head');
+            const bodyContainer = document.getElementById('table-body');
+            
+            // 1. Build Header Row (First row of your sheet)
+            const headerRow = document.createElement('tr');
+            data[0].forEach(headerText => {
+                const th = document.createElement('th');
+                th.textContent = headerText;
+                headerRow.appendChild(th);
+            });
+            headContainer.appendChild(headerRow);
+
+            // 2. Build Data Rows
+            for (let i = 1; i < data.length; i++) {
+                const rowData = data[i];
+                const tr = document.createElement('tr');
+                
+                rowData.forEach(cellText => {
+                    const td = document.createElement('td');
+                    td.textContent = cellText;
+                    tr.appendChild(td);
+                });
+                bodyContainer.appendChild(tr);
+            }
+
+            // Hide loading message and display the completed table
+            document.getElementById('loading-state').style.display = 'none';
+            document.getElementById('sheet-table').style.display = 'table';
+        }
+
+        // Initialize fetching on page load
+        loadSheetData();
     </script>
 
 </body>
