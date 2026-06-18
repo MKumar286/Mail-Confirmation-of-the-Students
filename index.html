@@ -287,7 +287,13 @@
     </div>
 
     <script>
+        // Your Exact Google Sheet CSV Export Link
         const yourSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQVGHSnygzd6lIkieye30zp-iVX_unEpKnZ_I3m__BhX0NfHicM_WvEJmo25mONaw/pub?gid=1824938792&single=true&output=csv';
+        
+        // --- COLUMN CONFIGURATION ---
+        // Make sure these match the exact text layout inside your Google Sheet header cells!
+        const COMPANY_COLUMN_NAME = "Company Name"; 
+        const ROLE_COLUMN_NAME = "Role";
         
         let globalDataGrid = [];
         let companyColIndex = -1;
@@ -322,14 +328,14 @@
             }
         }
 
-        // Dynamically find where "Company Name" or "Role" columns exist in your sheet headers
+        // Strict Matching targeting your specific Column Text configuration names
         function detectFilterColumns(headerRow) {
             headerRow.forEach((header, index) => {
-                const text = header.toLowerCase().replace(/[^a-z0-9]/g, '');
-                if (text.includes('company') || text.includes('organization')) {
+                const cleanHeader = header.trim().toLowerCase();
+                if (cleanHeader === COMPANY_COLUMN_NAME.trim().toLowerCase()) {
                     companyColIndex = index;
                 }
-                if (text.includes('role') || text.includes('designation') || text.includes('jobtitle')) {
+                if (cleanHeader === ROLE_COLUMN_NAME.trim().toLowerCase()) {
                     roleColIndex = index;
                 }
             });
@@ -342,8 +348,14 @@
             const roles = new Set();
 
             for (let i = 1; i < data.length; i++) {
-                if (companyColIndex !== -1 && data[i][companyColIndex]) companies.add(data[i][companyColIndex].trim());
-                if (roleColIndex !== -1 && data[i][roleColIndex]) roles.add(data[i][roleColIndex].trim());
+                if (companyColIndex !== -1 && data[i][companyColIndex]) {
+                    const val = data[i][companyColIndex].trim();
+                    if(val !== "") companies.add(val);
+                }
+                if (roleColIndex !== -1 && data[i][roleColIndex]) {
+                    const val = data[i][roleColIndex].trim();
+                    if(val !== "") roles.add(val);
+                }
             }
 
             const compSelect = document.getElementById('company-filter');
@@ -380,8 +392,8 @@
                 const row = globalDataGrid[i];
                 
                 // 1. Dropdown Filter Matches
-                const matchesCompany = !selectedCompany || (companyColIndex !== -1 && row[companyColIndex] === selectedCompany);
-                const matchesRole = !selectedRole || (roleColIndex !== -1 && row[roleColIndex] === selectedRole);
+                const matchesCompany = !selectedCompany || (companyColIndex !== -1 && row[companyColIndex]?.trim() === selectedCompany);
+                const matchesRole = !selectedRole || (roleColIndex !== -1 && row[roleColIndex]?.trim() === selectedRole);
                 
                 // 2. Search Text Matches
                 const matchesSearch = !searchQuery || row.some(cell => cell.toLowerCase().includes(searchQuery));
