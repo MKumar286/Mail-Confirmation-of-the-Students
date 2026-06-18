@@ -1,467 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>HR Contact Details</title>
-
-<!-- Papa Parse Library -->
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    font-family:Arial, sans-serif;
-    background:#f4f7ff;
-    padding:20px;
-}
-
-/* =========================
-   HEADING
-========================= */
-
-.heading{
-    text-align:center;
-    font-size:32px;
-    font-weight:bold;
-    color:#0b3d91;
-    margin-bottom:20px;
-}
-
-/* =========================
-   LOADING
-========================= */
-
-.loading{
-    text-align:center;
-    font-size:18px;
-    color:#0b3d91;
-    margin-bottom:15px;
-    font-weight:bold;
-}
-
-/* =========================
-   FILTERS
-========================= */
-
-#filters{
-    display:flex;
-    gap:15px;
-    margin-bottom:20px;
-    flex-wrap:wrap;
-    align-items:center;
-}
-
-#searchInput,
-#batchFilter{
-
-    padding:10px 15px;
-
-    border:2px solid #0b3d91;
-
-    border-radius:10px;
-
-    font-size:14px;
-
-    outline:none;
-
-    background:white;
-}
-
-#searchInput{
-    width:300px;
-}
-
-#batchFilter{
-    width:220px;
-}
-
-/* =========================
-   COUNT CARD
-========================= */
-
-.count-card{
-
-    background:#0b3d91;
-
-    color:white;
-
-    padding:10px 18px;
-
-    border-radius:10px;
-
-    font-size:14px;
-
-    font-weight:bold;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    min-width:130px;
-
-    height:42px;
-
-    box-shadow:0 3px 10px rgba(0,0,0,0.2);
-
-}
-
-/* =========================
-   TABLE
-========================= */
-
-.table-container{
-    overflow:auto;
-    max-height:80vh;
-    border-radius:10px;
-}
-
-table{
-
-    width:max-content;
-    min-width:100%;
-
-    border-collapse:collapse;
-
-    background:white;
-
-    border:2px solid #0b3d91;
-
-    box-shadow:0 5px 15px rgba(0,0,0,0.15);
-
-    table-layout:auto;
-}
-
-th,td{
-
-    border:1px solid #555;
-
-    padding:4px 10px;
-
-    text-align:center;
-
-    font-size:12px;
-
-    white-space:nowrap;
-
-    line-height:1.2;
-
-    height:28px;
-}
-
-th{
-
-    background:#0b3d91;
-
-    color:white;
-
-    font-weight:bold;
-
-    position:sticky;
-
-    top:0;
-
-    z-index:2;
-}
-
-tr:nth-child(even){
-    background:#f2f5ff;
-}
-
-tr:hover{
-    background:#dbeafe;
-    transition:0.3s;
-}
-
-/* =========================
-   MOBILE RESPONSIVE
-========================= */
-
-@media(max-width:768px){
-
-    body{
-        padding:10px;
-    }
-
-    .heading{
-        font-size:22px;
-        line-height:1.4;
-    }
-
-    #filters{
-        flex-direction:column;
-        align-items:stretch;
-    }
-
-    #searchInput,
-    #batchFilter,
-    .count-card{
-        width:100%;
-    }
-
-    th,td{
-        font-size:11px;
-        padding:6px 8px;
-    }
-
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sheet Data Viewer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+        .table-container {
+            width: 100%;
+            overflow-x: auto; /* Adds smooth horizontal scrollbar if columns overflow */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            background: white;
+        }
+        /* Structural layout for auto-adjusting columns */
+        table {
+            border-collapse: collapse;
+            width: max-content; /* Dynamically shrinks/grows to exactly fit the content width */
+            min-width: 100%;    /* Spans full screen width if data is sparse */
+        }
+        th, td {
+            border-bottom: 1px solid #e1e4e8;
+            padding: 12px 16px;
+            text-align: left;
+            white-space: nowrap; /* Forces columns to expand to the exact text width */
+        }
+        th {
+            background-color: #1f2937;
+            color: #ffffff;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        tr:nth-child(even) td {
+            background-color: #f8fafc;
+        }
+        tr:hover td {
+            background-color: #f1f5f9;
+        }
+        .loading {
+            padding: 20px;
+            font-style: italic;
+            color: #666;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="heading">
-    HR Contact Details for the AY 2025-2026
-</div>
+    <h2>Live Data Viewer</h2>
+    
+    <div class="table-container">
+        <div id="loading-state" class="loading">Loading live data from Google Sheets...</div>
+        <table id="sheet-table" style="display: none;">
+            <thead id="table-head"></thead>
+            <tbody id="table-body"></tbody>
+        </table>
+    </div>
 
-<div class="loading" id="loading">
-    Loading Data...
-</div>
+    <script>
+        // STABLE GOOGLE API ENDPOINT (Bypasses the 404 redirect bug)
+        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQVGHSnygzd6lIkieye30zp-iVX_unEpKnZ_I3m__BhX0NfHicM_WvEJmo25mONaw/gviz/tq?tqx=out:csv&gid=1824938792';
 
-<div id="filters"></div>
+        async function loadSheetData() {
+            try {
+                const response = await fetch(csvUrl);
+                if (!response.ok) throw new Error('Network response was not ok');
+                
+                const csvText = await response.text();
+                
+                // Parse CSV using PapaParse
+                Papa.parse(csvText, {
+                    skipEmptyLines: true,
+                    complete: function(results) {
+                        renderTable(results.data);
+                    },
+                    error: function(err) {
+                        throw new Error(err.message);
+                    }
+                });
+            } catch (error) {
+                console.error("Error loading sheet:", error);
+                document.getElementById('loading-state').innerHTML = 
+                    `<span style="color: red;">Error loading data. Verify that the Google Sheet sharing permissions are set to "Anyone with the link can view".</span>`;
+            }
+        }
 
-<div class="table-container">
-    <table id="dataTable"></table>
-</div>
-
-<script>
-
-/* =====================================
-   GOOGLE SHEET CSV LINK
-===================================== */
-
-const csvURL =
-"https://docs.google.com/spreadsheets/d/e/2PACX-1vQVGHSnygzd6lIkieye30zp-iVX_unEpKnZ_I3m__BhX0NfHicM_WvEJmo25mONaw/pub?gid=1824938792&single=true&output=csv";
-
-/* =====================================
-   LOAD CSV
-===================================== */
-
-function loadCSV(){
-
-    document.getElementById("loading").innerHTML =
-    "Loading Data...";
-
-    Papa.parse(csvURL,{
-
-        download:true,
-
-        skipEmptyLines:true,
-
-        complete:function(results){
-
-            const data = results.data;
-
-            if(data.length === 0){
-
-                document.getElementById("loading").innerHTML =
-                "No Data Found";
-
+        function renderTable(data) {
+            if (data.length === 0) {
+                document.getElementById('loading-state').textContent = "No data found in the sheet.";
                 return;
             }
 
-            createFilters(data);
+            const headContainer = document.getElementById('table-head');
+            const bodyContainer = document.getElementById('table-body');
+            
+            // Clear prior contents
+            headContainer.innerHTML = "";
+            bodyContainer.innerHTML = "";
 
-            createTable(data);
+            // 1. Build Header Row
+            const headerRow = document.createElement('tr');
+            data[0].forEach(headerText => {
+                const th = document.createElement('th');
+                th.textContent = headerText;
+                headerRow.appendChild(th);
+            });
+            headContainer.appendChild(headerRow);
 
-            document.getElementById("loading").style.display =
-            "none";
-
-        },
-
-        error:function(error){
-
-            console.log(error);
-
-            document.getElementById("loading").innerHTML =
-            "Unable to Load Data";
-
-        }
-
-    });
-
-}
-
-/* =====================================
-   CREATE FILTERS
-===================================== */
-
-function createFilters(data){
-
-    const filterDiv =
-    document.getElementById("filters");
-
-    const headers = data[0];
-
-    const batchIndex =
-    headers.findIndex(h =>
-        h.toLowerCase().includes("batch")
-    );
-
-    let batches = [];
-
-    if(batchIndex !== -1){
-
-        batches = [...new Set(
-
-            data.slice(1).map(
-                row => row[batchIndex]
-            )
-
-        )];
-
-    }
-
-    filterDiv.innerHTML = `
-
-    <input
-        type="text"
-        id="searchInput"
-        placeholder="Search Data..."
-        onkeyup="filterTable()"
-    >
-
-    <select
-        id="batchFilter"
-        onchange="filterTable()"
-    >
-
-        <option value="">
-            All Batches
-        </option>
-
-        ${batches.map(batch =>
-
-            `<option value="${batch}">
-                ${batch}
-            </option>`
-
-        ).join("")}
-
-    </select>
-
-    <div class="count-card">
-        Total Companies: <span id="rowCount">0</span>
-    </div>
-
-    `;
-
-}
-
-/* =====================================
-   CREATE TABLE
-===================================== */
-
-function createTable(data){
-
-    let tableHTML = "";
-
-    data.forEach((row,rowIndex)=>{
-
-        tableHTML += "<tr>";
-
-        row.forEach(cell=>{
-
-            if(rowIndex===0){
-
-                tableHTML += `<th>${cell}</th>`;
-
-            }else{
-
-                tableHTML += `<td>${cell}</td>`;
-
+            // 2. Build Data Rows
+            for (let i = 1; i < data.length; i++) {
+                const rowData = data[i];
+                const tr = document.createElement('tr');
+                
+                rowData.forEach(cellText => {
+                    const td = document.createElement('td');
+                    td.textContent = cellText;
+                    tr.appendChild(td);
+                });
+                bodyContainer.appendChild(tr);
             }
 
-        });
-
-        tableHTML += "</tr>";
-
-    });
-
-    document.getElementById("dataTable").innerHTML =
-    tableHTML;
-
-    document.getElementById("rowCount").innerText =
-    data.length - 1;
-
-}
-
-/* =====================================
-   FILTER TABLE
-===================================== */
-
-function filterTable(){
-
-    const search =
-    document.getElementById("searchInput")
-    .value
-    .toLowerCase();
-
-    const batch =
-    document.getElementById("batchFilter")
-    .value
-    .toLowerCase();
-
-    const table =
-    document.getElementById("dataTable");
-
-    const tr =
-    table.getElementsByTagName("tr");
-
-    let visibleRows = 0;
-
-    for(let i=1;i<tr.length;i++){
-
-        const rowText =
-        tr[i].innerText.toLowerCase();
-
-        const searchMatch =
-        rowText.includes(search);
-
-        const batchMatch =
-
-        batch === "" ||
-        rowText.includes(batch);
-
-        if(searchMatch && batchMatch){
-
-            tr[i].style.display = "";
-
-            visibleRows++;
-
-        }else{
-
-            tr[i].style.display = "none";
-
+            // UI adjustments
+            document.getElementById('loading-state').style.display = 'none';
+            document.getElementById('sheet-table').style.display = 'table';
         }
 
-    }
-
-    document.getElementById("rowCount").innerText =
-    visibleRows;
-
-}
-
-/* =====================================
-   LOAD PAGE
-===================================== */
-
-window.onload = loadCSV;
-
-</script>
+        // Initialize fetching on page load
+        loadSheetData();
+    </script>
 
 </body>
 </html>
