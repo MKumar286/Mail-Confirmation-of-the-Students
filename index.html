@@ -41,39 +41,93 @@
             background: #94a3b8;
         }
 
-        /* Branding Header Section Container */
+        /* Branding Header Section Container with Mixed Blue-Pink Shifting Glow Panel */
         .header-section {
             text-align: center;
-            margin: 0 auto 10px auto; 
+            margin: 0 auto 12px auto; 
             width: 100%;
             max-width: 1400px;
+            padding: 20px 20px;
+            /* High-Focus Solid Linear Dual Gradient Base */
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #2e0827 100%);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+        }
+
+        /* Embedded Dynamic Blue & Pink High-Focus Floating Colors Inside Header Panel */
+        .header-section::before, .header-section::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.5;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .header-section::before {
+            width: 160px;
+            height: 160px;
+            background: #00d2ff; /* Vibrant Electric Blue Floating Accent */
+            top: -20%;
+            left: 10%;
+            animation: float-header-left 8s infinite ease-in-out alternate;
+        }
+        .header-section::after {
+            width: 180px;
+            height: 180px;
+            background: #ff007f; /* Hyper-Vibrant Magenta Pink Floating Accent */
+            bottom: -30%;
+            right: 15%;
+            animation: float-header-right 10s infinite ease-in-out alternate;
+        }
+
+        @keyframes float-header-left {
+            0% { transform: translate(0px, 0px) scale(1); }
+            100% { transform: translate(30px, 15px) scale(1.15); }
+        }
+        @keyframes float-header-right {
+            0% { transform: translate(0px, 0px) scale(1); }
+            100% { transform: translate(-35px, -10px) scale(0.9); }
+        }
+
+        /* Ensures Text Elements sit boldly over the internal glowing background shapes */
+        .main-heading, .sub-heading, .context-heading {
+            position: relative;
+            z-index: 2;
         }
 
         .main-heading {
             font-size: 1.6rem; 
             font-weight: 800; 
             letter-spacing: -0.02em;
-            color: #0f172a;
+            color: #ffffff; /* Swapped to crisp high-contrast clear white text */
             margin-bottom: 2px; 
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
         }
 
         .sub-heading {
             font-size: 1.1rem;
             font-weight: 700; 
             letter-spacing: 0.02em;
-            color: #475569;
-            margin-bottom: 6px; 
+            color: #cbd5e1; /* Set to clear silver tint for dynamic reading contrast */
+            margin-bottom: 8px; 
+            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
         }
 
         .context-heading {
             display: inline-block;
             font-size: 0.85rem;
             font-weight: 700; 
-            padding: 3px 12px;
-            background-color: #f1f5f9;
-            border: 1px solid #e2e8f0;
+            padding: 4px 14px;
+            background-color: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50px;
-            color: #2563eb;
+            color: #00d2ff; /* Sharp blue accent tint text alignment */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         /* Controls Filter Panel Row */
@@ -166,7 +220,7 @@
             background-color: #f8fafc; 
         }
 
-        /* FIXED: Safe Orange Cursor Focus Point applied directly to inner cell items */
+        /* Safe Orange Cursor Focus Point applied directly to inner cell items */
         tr:hover td {
             background-color: rgba(255, 102, 0, 0.12) !important; 
             color: #000000; 
