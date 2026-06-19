@@ -100,7 +100,7 @@
         }
 
         .input-control:focus {
-            border-color: #ff6600; /* Orange boundary color on control focus */
+            border-color: #ff6600; 
             box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.15);
         }
 
@@ -154,227 +154,42 @@
             color: #334155;
             font-size: 0.85rem;
             white-space: nowrap; 
+            border-top: 1px solid transparent;
+            border-bottom: 1px solid transparent;
         }
 
         tr {
             border-bottom: 1px solid #e2e8f0;
-            transition: all 0.1s ease;
         }
 
         tr:nth-child(even) {
             background-color: #f8fafc; 
         }
 
-        /* 2. Orange Cursor Focus Point to Highlight Row Selection */
+        /* FIXED: Safe Orange Cursor Focus Point applied directly to inner cell items */
         tr:hover td {
-            background-color: rgba(255, 102, 0, 0.12) !important; /* Premium light orange row highlight */
-            color: #000000; /* Darkens text for perfect reading contrast */
-            border-top: 1px solid #ff6600;
-            border-bottom: 1px solid #ff6600;
+            background-color: rgba(255, 102, 0, 0.12) !important; 
+            color: #000000; 
+            border-top: 1px solid #ff6600 !important;
+            border-bottom: 1px solid #ff6600 !important;
         }
 
-        /* 1. Micro-Sized Button Frame Adjustments */
+        /* Micro-Sized Button Frame Adjustments */
         .view-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 3px;
-            padding: 1px 6px; /* Decreased button space layout dimensions */
+            padding: 1px 6px; 
             background: linear-gradient(135deg, #7c3aed 0%, #0d9488 100%); 
             color: #ffffff !important;
             text-decoration: none;
             border-radius: 3px;
-            font-size: 0.7rem; /* Tiny micro typography size */
+            font-size: 0.7rem; 
             font-weight: 700; 
             transition: all 0.15s ease;
             line-height: 1.2;
         }
 
         .view-btn:hover {
-            transform: scale(1.03);
-            background: linear-gradient(135deg, #6d28d9 0%, #0f766e 100%);
-        }
-
-        .pdf-icon {
-            width: 9px; /* Shrunk icon width scale dimensions */
-            height: 9px;
-            fill: currentColor;
-        }
-
-        /* UI Loading Layout */
-        .status-container {
-            padding: 30px;
-            text-align: center;
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: #64748b;
-        }
-        .pulse {
-            animation: pulse-animation 2s infinite ease-in-out;
-        }
-        @keyframes pulse-animation {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="header-section">
-        <h1 class="main-heading">Mahatma Gandhi Institute of Technology (A)</h1>
-        <h2 class="sub-heading">Training & Placement Cell</h2>
-        <div class="context-heading">Mail Confirmation of the Selected Students by the Company</div>
-    </div>
-
-    <div class="controls-panel">
-        <input type="text" id="global-search" class="input-control" placeholder="Search anything in the table...">
-        <select id="company-filter" class="input-control">
-            <option value="">All Companies</option>
-        </select>
-        <select id="role-filter" class="input-control">
-            <option value="">All Roles</option>
-        </select>
-    </div>
-    
-    <div class="table-card">
-        <div id="status-display" class="status-container pulse">Loading live placement confirmation roster...</div>
-        <div class="table-responsive-wrapper">
-            <table id="sheet-table" style="display: none;">
-                <thead id="table-head"></thead>
-                <tbody id="table-body"></tbody>
-            </table>
-        </div>
-    </div>
-
-    <script>
-        const yourSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQVGHSnygzd6lIkieye30zp-iVX_unEpKnZ_I3m__BhX0NfHicM_WvEJmo25mONaw/pub?gid=1824938792&single=true&output=csv';
-        
-        // --- COLUMN CONFIGURATION ---
-        const COMPANY_COLUMN_NAME = "Company Name"; 
-        const ROLE_COLUMN_NAME = "Role";
-        
-        let globalDataGrid = [];
-        let companyColIndex = -1;
-        let roleColIndex = -1;
-
-        function initSheetDownload() {
-            Papa.parse(yourSpreadsheetUrl, {
-                download: true,
-                skipEmptyLines: true,
-                complete: function(results) {
-                    globalDataGrid = results.data;
-                    detectFilterColumns(globalDataGrid[0]);
-                    populateFilterDropdowns(globalDataGrid);
-                    renderHtmlTable(globalDataGrid);
-                    setupFilterEventListeners();
-                },
-                error: function(err) {
-                    console.error("Data Load Error:", err);
-                    const statusBox = document.getElementById('status-display');
-                    statusBox.classList.remove('pulse');
-                    statusBox.innerHTML = `<span style="color:#ef4444; font-weight:700;">Unable to pull data. Check permissions.</span>`;
-                }
-            });
-        }
-
-        function isValidUrl(string) {
-            try {
-                const url = new URL(string.trim());
-                return url.protocol === "http:" || url.protocol === "https:";
-            } catch (_) {
-                return false;  
-            }
-        }
-
-        function detectFilterColumns(headerRow) {
-            headerRow.forEach((header, index) => {
-                const cleanHeader = header.trim().toLowerCase();
-                if (cleanHeader === COMPANY_COLUMN_NAME.trim().toLowerCase()) {
-                    companyColIndex = index;
-                }
-                if (cleanHeader === ROLE_COLUMN_NAME.trim().toLowerCase()) {
-                    roleColIndex = index;
-                }
-            });
-        }
-
-        function populateFilterDropdowns(data) {
-            if (data.length <= 1) return;
-            
-            const companies = new Set();
-            const roles = new Set();
-
-            for (let i = 1; i < data.length; i++) {
-                if (companyColIndex !== -1 && data[i][companyColIndex]) {
-                    const val = data[i][companyColIndex].trim();
-                    if(val !== "") companies.add(val);
-                }
-                if (roleColIndex !== -1 && data[i][roleColIndex]) {
-                    const val = data[i][roleColIndex].trim();
-                    if(val !== "") roles.add(val);
-                }
-            }
-
-            const compSelect = document.getElementById('company-filter');
-            Array.from(companies).sort().forEach(comp => {
-                const opt = document.createElement('option');
-                opt.value = comp;
-                opt.textContent = comp;
-                compSelect.appendChild(opt);
-            });
-
-            const roleSelect = document.getElementById('role-filter');
-            Array.from(roles).sort().forEach(role => {
-                const opt = document.createElement('option');
-                opt.value = role;
-                opt.textContent = role;
-                roleSelect.appendChild(opt);
-            });
-        }
-
-        function setupFilterEventListeners() {
-            document.getElementById('global-search').addEventListener('input', applyCombinedFilters);
-            document.getElementById('company-filter').addEventListener('change', applyCombinedFilters);
-            document.getElementById('role-filter').addEventListener('change', applyCombinedFilters);
-        }
-
-        function applyCombinedFilters() {
-            const searchQuery = document.getElementById('global-search').value.toLowerCase().trim();
-            const selectedCompany = document.getElementById('company-filter').value;
-            const selectedRole = document.getElementById('role-filter').value;
-
-            const filteredRows = [globalDataGrid[0]];
-
-            for (let i = 1; i < globalDataGrid.length; i++) {
-                const row = globalDataGrid[i];
-                
-                const matchesCompany = !selectedCompany || (companyColIndex !== -1 && row[companyColIndex]?.trim() === selectedCompany);
-                const matchesRole = !selectedRole || (roleColIndex !== -1 && row[roleColIndex]?.trim() === selectedRole);
-                const matchesSearch = !searchQuery || row.some(cell => cell.toLowerCase().includes(searchQuery));
-
-                if (matchesCompany && matchesRole && matchesSearch) {
-                    filteredRows.push(row);
-                }
-            }
-
-            renderHtmlTable(filteredRows, true);
-        }
-
-        function renderHtmlTable(data, isFiltering = false) {
-            const tableHead = document.getElementById('table-head');
-            const tableBody = document.getElementById('table-body');
-            
-            tableHead.innerHTML = "";
-            tableBody.innerHTML = "";
-
-            if (!data || data.length === 0 || (isFiltering && data.length === 1)) {
-                document.getElementById('sheet-table').style.display = 'none';
-                document.getElementById('status-display').style.display = 'block';
-                document.getElementById('status-display').textContent = "No records match your selected search criteria.";
-                return;
-            }
-
-            // 1. Render Header Row
-            const headerTr = document.createElement('tr');
-            data[0].forEach(headerText => {
-                const th = document.createElement('th');
+            transform: scale(1.03
