@@ -21,7 +21,7 @@
             min-height: 100vh;
             background-color: #ffffff;
             color: #1e293b;
-            padding: 10px 15px 30px 15px; /* Minimal top padding */
+            padding: 10px 15px 30px 15px; 
             position: relative;
         }
 
@@ -41,10 +41,10 @@
             background: #94a3b8;
         }
 
-        /* Branding Header Section Container - Tightly Spaced */
+        /* Branding Header Section Container */
         .header-section {
             text-align: center;
-            margin: 0 auto 10px auto; /* Reduced bottom gap */
+            margin: 0 auto 10px auto; 
             width: 100%;
             max-width: 1400px;
         }
@@ -54,7 +54,7 @@
             font-weight: 800; 
             letter-spacing: -0.02em;
             color: #0f172a;
-            margin-bottom: 2px; /* Minimal gap */
+            margin-bottom: 2px; 
         }
 
         .sub-heading {
@@ -62,7 +62,7 @@
             font-weight: 700; 
             letter-spacing: 0.02em;
             color: #475569;
-            margin-bottom: 6px; /* Minimal gap */
+            margin-bottom: 6px; 
         }
 
         .context-heading {
@@ -76,14 +76,14 @@
             color: #2563eb;
         }
 
-        /* Controls Filter Panel Row - Tightly Spaced */
+        /* Controls Filter Panel Row */
         .controls-panel {
             width: 100%;
             max-width: 1400px;
             display: grid;
             grid-template-columns: 2fr 1fr 1fr;
             gap: 10px;
-            margin: 0 auto 10px auto; /* Reduced bottom gap directly above table */
+            margin: 0 auto 10px auto; 
         }
 
         .input-control {
@@ -100,8 +100,8 @@
         }
 
         .input-control:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+            border-color: #ff6600; /* Orange boundary color on control focus */
+            box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.15);
         }
 
         /* Solid High-Contrast Container Card */
@@ -121,7 +121,7 @@
             width: 100%;
         }
 
-        /* Structural Rules */
+        /* Structural Table Rules */
         table {
             border-collapse: collapse;
             width: max-content; 
@@ -130,12 +130,12 @@
         }
 
         th, td {
-            padding: 5px 12px; /* Tight, responsive row spacing */
+            padding: 5px 12px; 
             text-align: center; 
             vertical-align: middle;
         }
 
-        /* 1. Next-line Column Wrapping for Headers */
+        /* Next-line Column Wrapping for Headers */
         th {
             background-color: #0f2e4a; 
             color: #ffffff;
@@ -143,10 +143,9 @@
             font-size: 0.85rem;
             letter-spacing: 0.01em;
             border-bottom: 2px solid #e2e8f0;
-            /* Overridden to allow long text headers to break onto the next line naturally */
             white-space: normal !important; 
             word-wrap: break-word;
-            max-width: 180px; /* Gives long headers a clean width to wrap within */
+            max-width: 180px; 
         }
 
         /* Data Cells - Maintained Bold & Kept on One Line */
@@ -159,42 +158,46 @@
 
         tr {
             border-bottom: 1px solid #e2e8f0;
-            transition: background-color 0.15s ease;
+            transition: all 0.1s ease;
         }
 
         tr:nth-child(even) {
             background-color: #f8fafc; 
         }
 
+        /* 2. Orange Cursor Focus Point to Highlight Row Selection */
         tr:hover td {
-            background-color: #f1f5f9;
-            color: #0f172a;
+            background-color: rgba(255, 102, 0, 0.12) !important; /* Premium light orange row highlight */
+            color: #000000; /* Darkens text for perfect reading contrast */
+            border-top: 1px solid #ff6600;
+            border-bottom: 1px solid #ff6600;
         }
 
-        /* 2. Micro-sized mixed color gradient button */
+        /* 1. Micro-Sized Button Frame Adjustments */
         .view-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
-            padding: 2px 8px; /* Micro padding to strictly match raw text height line */
-            background: linear-gradient(135deg, #7c3aed 0%, #0d9488 100%); /* Purple to Teal mixed gradient */
+            gap: 3px;
+            padding: 1px 6px; /* Decreased button space layout dimensions */
+            background: linear-gradient(135deg, #7c3aed 0%, #0d9488 100%); 
             color: #ffffff !important;
             text-decoration: none;
-            border-radius: 4px;
-            font-size: 0.75rem;
+            border-radius: 3px;
+            font-size: 0.7rem; /* Tiny micro typography size */
             font-weight: 700; 
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
+            line-height: 1.2;
         }
 
         .view-btn:hover {
-            transform: translateY(-0.5px);
+            transform: scale(1.03);
             background: linear-gradient(135deg, #6d28d9 0%, #0f766e 100%);
         }
 
         .pdf-icon {
-            width: 10px;
-            height: 10px;
+            width: 9px; /* Shrunk icon width scale dimensions */
+            height: 9px;
             fill: currentColor;
         }
 
@@ -375,45 +378,3 @@
             const headerTr = document.createElement('tr');
             data[0].forEach(headerText => {
                 const th = document.createElement('th');
-                th.textContent = headerText;
-                headerTr.appendChild(th);
-            });
-            tableHead.appendChild(headerTr);
-
-            // 2. Render Body Data Rows
-            for (let i = 1; i < data.length; i++) {
-                const rowData = data[i];
-                const tr = document.createElement('tr');
-                
-                rowData.forEach(cellText => {
-                    const td = document.createElement('td');
-                    const cleanText = cellText.trim();
-
-                    if (isValidUrl(cleanText)) {
-                        const actionButton = document.createElement('a');
-                        actionButton.href = cleanText;
-                        actionButton.target = "_blank";
-                        actionButton.className = "view-btn";
-                        
-                        actionButton.innerHTML = `
-                            <svg class="pdf-icon" viewBox="0 0 384 512">
-                                <path d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 53.7-26.8-11-5.1-19.6-19.2-25.3-35.9zm-124.5 68.2c-16.3 0-21.6 13.1-21.6 23.9 0 20.5 22.8 38.7 54.5 38.7 14.6 0 21.7-6.5 24-12.4-5.3-22.1-41.2-50.2-56.9-50.2zm238.1-259.5H224c-13.3 0-24 10.7-24 24v110.1c11.9-10.7 27.5-21.4 44.8-31.5 21.1-12.3 27-26.2 27-37 0-12.2-11.5-23.6-24-23.6zM384 121.9v342.2c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V48c0-26.5 21.5-48 48-48h147.9c12.7 0 25 5.1 34 14.1l110 110c9 9 14.1 21.3 14.1 33.8zm-113.1 32c0-3.6-2.9-6.5-6.5-6.5H240v29.3c0 3.6 2.9 6.5 6.5 6.5h24.4c3.6 0 6.5-2.9 6.5-6.5v-22.8zM100.8 450c-23.3 0-48.4-12.8-48.4-42.3 0-24 16.2-46.1 48.3-46.1 20 0 46.2 20.3 64.9 39.5 23.2-30.8 44.1-73.6 56.4-114.1-11.8-36.5-16.1-75.3-7.5-90 8.7-14.8 24.1-23 37.9-23 25.5 0 41.2 22.8 41.2 46.1 0 25.5-17.7 54.1-44.5 73-34.2 24.2-76.1 43.1-105.1 54.9-12.9 22-24.1 47.3-33 71.7 34.6 23.9 65 37.3 84 37.3 32.7 0 44.7-22.1 44.7-34.6 0-33.8-51.2-50.5-81.8-14.5-5.9 7-10 17.1-12.4 22.7-5.3 11.2-17.6 12.3-26.4 12.3z"/>
-                            </svg> View`;
-                        td.appendChild(actionButton);
-                    } else {
-                        td.textContent = cellText;
-                    }
-                    tr.appendChild(td);
-                });
-                tableBody.appendChild(tr);
-            }
-
-            document.getElementById('status-display').style.display = 'none';
-            document.getElementById('sheet-table').style.display = 'table';
-        }
-
-        window.addEventListener('DOMContentLoaded', initSheetDownload);
-    </script>
-
-</body>
-</html>
