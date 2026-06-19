@@ -19,10 +19,9 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             min-height: 100vh;
-            /* Solid Clean White Screen Style */
             background-color: #ffffff;
             color: #1e293b;
-            padding: 20px 20px 40px 20px; 
+            padding: 10px 15px 30px 15px; /* Minimal top padding */
             position: relative;
         }
 
@@ -42,78 +41,67 @@
             background: #94a3b8;
         }
 
-        /* Branding Header Section Container - Clean Block Centering */
+        /* Branding Header Section Container - Tightly Spaced */
         .header-section {
             text-align: center;
-            margin: 0 auto 15px auto; 
+            margin: 0 auto 10px auto; /* Reduced bottom gap */
             width: 100%;
             max-width: 1400px;
-            position: relative;
-            z-index: 2;
         }
 
         .main-heading {
-            font-size: 1.8rem; /* Scaled down slightly to match screen formatting */
+            font-size: 1.6rem; 
             font-weight: 800; 
             letter-spacing: -0.02em;
             color: #0f172a;
-            margin-bottom: 4px; 
+            margin-bottom: 2px; /* Minimal gap */
         }
 
         .sub-heading {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 700; 
             letter-spacing: 0.02em;
             color: #475569;
-            margin-bottom: 8px; 
+            margin-bottom: 6px; /* Minimal gap */
         }
 
         .context-heading {
             display: inline-block;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 700; 
-            padding: 5px 15px;
+            padding: 3px 12px;
             background-color: #f1f5f9;
             border: 1px solid #e2e8f0;
             border-radius: 50px;
             color: #2563eb;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
-        /* Controls Filter Panel Row */
+        /* Controls Filter Panel Row - Tightly Spaced */
         .controls-panel {
             width: 100%;
             max-width: 1400px;
             display: grid;
             grid-template-columns: 2fr 1fr 1fr;
-            gap: 12px;
-            margin: 0 auto 15px auto;
-            position: relative;
-            z-index: 2;
+            gap: 10px;
+            margin: 0 auto 10px auto; /* Reduced bottom gap directly above table */
         }
 
         .input-control {
             width: 100%;
-            padding: 8px 12px;
+            padding: 6px 12px;
             background: #ffffff;
             border: 1px solid #cbd5e1;
             border-radius: 6px;
             color: #0f172a;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             font-weight: 600; 
             outline: none;
             transition: all 0.2s ease;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
 
         .input-control:focus {
             border-color: #2563eb;
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-        }
-
-        select.input-control option {
-            background-color: #ffffff;
-            color: #0f172a;
         }
 
         /* Solid High-Contrast Container Card */
@@ -124,18 +112,16 @@
             margin: 0 auto;
             background: #ffffff;
             border: 1px solid #e2e8f0; 
-            border-radius: 10px;
+            border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
             overflow: hidden;
-            position: relative;
-            z-index: 1;
         }
 
         .table-responsive-wrapper {
             width: 100%;
         }
 
-        /* Strict Structural Auto-Width Table Rules */
+        /* Structural Rules */
         table {
             border-collapse: collapse;
             width: max-content; 
@@ -144,35 +130,40 @@
         }
 
         th, td {
-            padding: 7px 14px; /* Decreased row padding height significantly */
+            padding: 5px 12px; /* Tight, responsive row spacing */
             text-align: center; 
-            white-space: nowrap; 
-            font-size: 0.85rem; /* Decreased global table font size to fit your layout */
             vertical-align: middle;
         }
 
-        /* Solid Table Header Styles */
+        /* 1. Next-line Column Wrapping for Headers */
         th {
             background-color: #0f2e4a; 
             color: #ffffff;
             font-weight: 700; 
+            font-size: 0.85rem;
             letter-spacing: 0.01em;
             border-bottom: 2px solid #e2e8f0;
+            /* Overridden to allow long text headers to break onto the next line naturally */
+            white-space: normal !important; 
+            word-wrap: break-word;
+            max-width: 180px; /* Gives long headers a clean width to wrap within */
         }
 
-        /* Data Rows Layout */
+        /* Data Cells - Maintained Bold & Kept on One Line */
+        td {
+            font-weight: 600; 
+            color: #334155;
+            font-size: 0.85rem;
+            white-space: nowrap; 
+        }
+
         tr {
             border-bottom: 1px solid #e2e8f0;
             transition: background-color 0.15s ease;
         }
 
-        td {
-            font-weight: 600; /* Maintains requested bold values */
-            color: #334155;
-        }
-
         tr:nth-child(even) {
-            background-color: #f8fafc; /* Alternating crisp silver gray rows */
+            background-color: #f8fafc; 
         }
 
         tr:hover td {
@@ -180,40 +171,38 @@
             color: #0f172a;
         }
 
-        /* View Button with inline scalable SVG PDF icon */
+        /* 2. Micro-sized mixed color gradient button */
         .view-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            padding: 4px 10px;
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            gap: 4px;
+            padding: 2px 8px; /* Micro padding to strictly match raw text height line */
+            background: linear-gradient(135deg, #7c3aed 0%, #0d9488 100%); /* Purple to Teal mixed gradient */
             color: #ffffff !important;
             text-decoration: none;
             border-radius: 4px;
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             font-weight: 700; 
-            box-shadow: 0 1px 3px rgba(239, 68, 68, 0.2);
             transition: all 0.2s ease;
         }
 
         .view-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 3px 8px rgba(239, 68, 68, 0.4);
-            background: linear-gradient(135deg, #f87171 0%, #b91c1c 100%);
+            transform: translateY(-0.5px);
+            background: linear-gradient(135deg, #6d28d9 0%, #0f766e 100%);
         }
 
         .pdf-icon {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             fill: currentColor;
         }
 
         /* UI Loading Layout */
         .status-container {
-            padding: 40px;
+            padding: 30px;
             text-align: center;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 700;
             color: #64748b;
         }
@@ -255,8 +244,7 @@
     </div>
 
     <script>
-        // Your Exact Google Sheet CSV Export Link
-        const yourSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSzi2UfchSGRPmZfSVheSGZBTmRWLeEHDkbhfQhv_fTcRiXPBAopA3QWU55IovkEsxh7E3rl0VjTLlB/pub?gid=157028113&single=true&output=csv';
+        const yourSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQVGHSnygzd6lIkieye30zp-iVX_unEpKnZ_I3m__BhX0NfHicM_WvEJmo25mONaw/pub?gid=1824938792&single=true&output=csv';
         
         // --- COLUMN CONFIGURATION ---
         const COMPANY_COLUMN_NAME = "Company Name"; 
