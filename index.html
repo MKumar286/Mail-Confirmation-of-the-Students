@@ -14,62 +14,32 @@
         }
         html {
             overflow-x: auto;
-            overflow-y: auto; /* Restored vertical screen movement */
+            overflow-y: auto;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             min-height: 100vh;
-            /* Ultra High-Fidelity Deep Cosmic Neon Mesh Gradient */
-            background: radial-gradient(circle at 10% 20%, #03000a 0%, #081122 35%, #240533 70%, #000000 100%);
-            background-attachment: fixed;
-            color: #ffffff;
+            /* Solid Clean White Screen Style */
+            background-color: #ffffff;
+            color: #1e293b;
             padding: 20px 20px 40px 20px; 
             position: relative;
         }
 
         /* Screen-Pinned Custom Horizontal Scrollbar Styling */
         html::-webkit-scrollbar, body::-webkit-scrollbar {
-            height: 12px;
+            height: 10px;
         }
         html::-webkit-scrollbar-track, body::-webkit-scrollbar-track {
-            background: rgba(5, 3, 10, 0.95);
+            background: #f1f5f9;
         }
         html::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb {
-            background: linear-gradient(90deg, #00e5ff, #ff007f);
+            background: #cbd5e1;
             border-radius: 10px;
-            border: 2px solid #05030a;
+            border: 2px solid #f1f5f9;
         }
-
-        /* 24K HD Premium Hyper-Glow Shifting Blobs */
-        .glow-blob {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.45;
-            z-index: 0;
-            pointer-events: none;
-        }
-        .blob-pink {
-            width: 500px;
-            height: 500px;
-            background: #ff007f;
-            top: -15%;
-            left: -15%;
-            animation: float-around 18s infinite ease-in-out alternate;
-        }
-        .blob-blue {
-            width: 600px;
-            height: 600px;
-            background: #00e5ff;
-            bottom: -20%;
-            right: -15%;
-            animation: float-around 24s infinite ease-in-out alternate-reverse;
-        }
-
-        @keyframes float-around {
-            0% { transform: translate(0px, 0px) scale(1); }
-            50% { transform: translate(60px, 80px) scale(1.2); }
-            100% { transform: translate(-40px, 40px) scale(0.9); }
+        html::-webkit-scrollbar-thumb:hover, body::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
 
         /* Branding Header Section Container - Clean Block Centering */
@@ -83,44 +53,40 @@
         }
 
         .main-heading {
-            font-size: 2.1rem;
+            font-size: 1.8rem; /* Scaled down slightly to match screen formatting */
             font-weight: 800; 
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #00e5ff 0%, #ff007f 50%, #e040fb 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #0f172a;
             margin-bottom: 4px; 
-            text-shadow: 0 0 40px rgba(0, 229, 255, 0.2);
         }
 
         .sub-heading {
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             font-weight: 700; 
             letter-spacing: 0.02em;
-            color: #e2e8f0;
+            color: #475569;
             margin-bottom: 8px; 
-            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
         }
 
         .context-heading {
             display: inline-block;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 700; 
-            padding: 6px 18px;
-            background: linear-gradient(90deg, rgba(0, 229, 255, 0.2) 0%, rgba(255, 0, 127, 0.2) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            background-color: #f1f5f9;
+            border: 1px solid #e2e8f0;
             border-radius: 50px;
-            color: #ff007f;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 0, 127, 0.2);
+            color: #2563eb;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
-        /* Controls Filter Panel Row - Safe Margin Layout */
+        /* Controls Filter Panel Row */
         .controls-panel {
             width: 100%;
             max-width: 1400px;
             display: grid;
             grid-template-columns: 2fr 1fr 1fr;
-            gap: 15px;
+            gap: 12px;
             margin: 0 auto 15px auto;
             position: relative;
             z-index: 2;
@@ -128,42 +94,39 @@
 
         .input-control {
             width: 100%;
-            padding: 11px 16px;
-            background: rgba(6, 4, 12, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            color: #ffffff;
-            font-size: 0.95rem;
-            font-weight: 700; 
+            padding: 8px 12px;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            color: #0f172a;
+            font-size: 0.9rem;
+            font-weight: 600; 
             outline: none;
             transition: all 0.2s ease;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
 
         .input-control:focus {
-            border-color: #00e5ff;
-            box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.3), inset 0 1px 3px rgba(0,0,0,0.5);
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
         }
 
         select.input-control option {
-            background-color: #06040c;
-            color: #ffffff;
-            font-weight: 600;
+            background-color: #ffffff;
+            color: #0f172a;
         }
 
-        /* 24K HD 3D Solid Glassmorphic Container Card - Strict Overflow Protection */
+        /* Solid High-Contrast Container Card */
         .table-card {
             width: max-content; 
             min-width: 100%;
             max-width: 1400px;
             margin: 0 auto;
-            background: linear-gradient(135deg, rgba(16, 12, 28, 0.75) 0%, rgba(8, 10, 20, 0.8) 100%);
-            backdrop-filter: blur(40px); 
-            -webkit-backdrop-filter: blur(40px);
-            border: 1px solid rgba(255, 255, 255, 0.12); 
-            border-radius: 16px;
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255,255,255,0.1); 
+            background: #ffffff;
+            border: 1px solid #e2e8f0; 
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
             position: relative;
             z-index: 1;
         }
@@ -177,46 +140,44 @@
             border-collapse: collapse;
             width: max-content; 
             min-width: 100%;
-            table-layout: auto; /* Ensures natural text metrics dictate column sizes */
+            table-layout: auto; 
         }
 
         th, td {
-            padding: 14px 22px;
+            padding: 7px 14px; /* Decreased row padding height significantly */
             text-align: center; 
             white-space: nowrap; 
-            font-size: 0.98rem;
+            font-size: 0.85rem; /* Decreased global table font size to fit your layout */
             vertical-align: middle;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
         }
 
         /* Solid Table Header Styles */
         th {
-            background-color: #051d33; 
-            color: #00e5ff;
-            font-weight: 800; 
-            letter-spacing: 0.02em;
-            border-bottom: 3px solid rgba(0, 229, 255, 0.4);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            background-color: #0f2e4a; 
+            color: #ffffff;
+            font-weight: 700; 
+            letter-spacing: 0.01em;
+            border-bottom: 2px solid #e2e8f0;
         }
 
         /* Data Rows Layout */
         tr {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            border-bottom: 1px solid #e2e8f0;
             transition: background-color 0.15s ease;
         }
 
         td {
-            font-weight: 600; 
-            color: #ffffff;
+            font-weight: 600; /* Maintains requested bold values */
+            color: #334155;
         }
 
         tr:nth-child(even) {
-            background-color: rgba(255, 255, 255, 0.02);
+            background-color: #f8fafc; /* Alternating crisp silver gray rows */
         }
 
         tr:hover td {
-            background-color: rgba(255, 0, 127, 0.12);
-            color: #ffffff;
+            background-color: #f1f5f9;
+            color: #0f172a;
         }
 
         /* View Button with inline scalable SVG PDF icon */
@@ -224,51 +185,48 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 7px 16px;
-            background: linear-gradient(135deg, #ff0055 0%, #b3003b 100%);
+            gap: 6px;
+            padding: 4px 10px;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             color: #ffffff !important;
             text-decoration: none;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 800; 
-            box-shadow: 0 3px 10px rgba(255, 0, 85, 0.4);
+            border-radius: 4px;
+            font-size: 0.78rem;
+            font-weight: 700; 
+            box-shadow: 0 1px 3px rgba(239, 68, 68, 0.2);
             transition: all 0.2s ease;
         }
 
         .view-btn:hover {
-            transform: translateY(-1.5px);
-            box-shadow: 0 6px 18px rgba(255, 0, 85, 0.6);
-            background: linear-gradient(135deg, #ff3377 0%, #d60048 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(239, 68, 68, 0.4);
+            background: linear-gradient(135deg, #f87171 0%, #b91c1c 100%);
         }
 
         .pdf-icon {
-            width: 15px;
-            height: 15px;
+            width: 12px;
+            height: 12px;
             fill: currentColor;
         }
 
         /* UI Loading Layout */
         .status-container {
-            padding: 50px;
+            padding: 40px;
             text-align: center;
-            font-size: 1.15rem;
+            font-size: 1rem;
             font-weight: 700;
-            color: #cbd5e1;
+            color: #64748b;
         }
         .pulse {
             animation: pulse-animation 2s infinite ease-in-out;
         }
         @keyframes pulse-animation {
-            0%, 100% { opacity: 0.5; }
+            0%, 100% { opacity: 0.6; }
             50% { opacity: 1; }
         }
     </style>
 </head>
 <body>
-
-    <div class="glow-blob blob-pink"></div>
-    <div class="glow-blob blob-blue"></div>
 
     <div class="header-section">
         <h1 class="main-heading">Mahatma Gandhi Institute of Technology (A)</h1>
@@ -298,7 +256,7 @@
 
     <script>
         // Your Exact Google Sheet CSV Export Link
-        const yourSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSzi2UfchSGRPmZfSVheSGZBTmRWLeEHDkbhfQhv_fTcRiXPBAopA3QWU55IovkEsxh7E3rl0VjTLlB/pub?gid=157028113&single=true&output=csv';
+        const yourSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQVGHSnygzd6lIkieye30zp-iVX_unEpKnZ_I3m__BhX0NfHicM_WvEJmo25mONaw/pub?gid=1824938792&single=true&output=csv';
         
         // --- COLUMN CONFIGURATION ---
         const COMPANY_COLUMN_NAME = "Company Name"; 
@@ -323,7 +281,7 @@
                     console.error("Data Load Error:", err);
                     const statusBox = document.getElementById('status-display');
                     statusBox.classList.remove('pulse');
-                    statusBox.innerHTML = `<span style="color:#ff0055; font-weight:700;">Unable to pull data. Check permissions.</span>`;
+                    statusBox.innerHTML = `<span style="color:#ef4444; font-weight:700;">Unable to pull data. Check permissions.</span>`;
                 }
             });
         }
